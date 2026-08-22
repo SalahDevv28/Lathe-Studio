@@ -11,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/blog', '/blog/', '/services'],
     },
     sitemap: `${BRAND_URL}/sitemap.xml`,
-    host: BRAND_URL,
+    // No "host" directive: it is Yandex-only and deprecated; Google ignores it.
   }
 }

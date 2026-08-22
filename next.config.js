@@ -14,12 +14,12 @@ const nextConfig = {
     return [
       {
         source: '/case-studies/first-case-study',
-        destination: '/case-studies/raynor-landing-solutions',
+        destination: '/case-studies/raynor-lending-solutions',
         permanent: true,
       },
       {
         source: '/case-studies/second-case-study',
-        destination: '/case-studies/purple-jest',
+        destination: '/case-studies/property-agency-crm',
         permanent: true,
       },
       {

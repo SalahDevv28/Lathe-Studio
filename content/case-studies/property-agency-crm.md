@@ -1,9 +1,9 @@
 ---
 title: "Full-Scale Rebrand, Custom CRM & AI Automation for a Real Estate Agency"
 date: "18-04-2026"
-client: "Purple Jest (name changed to protect client privacy)"
+client: "Real estate agency (name withheld at the client's request)"
 category: "Real Estate Technology"
-featuredImage: "/images/case-studies/purple-jest/purplejest-cover.svg"
+featuredImage: "/images/case-studies/property-agency-crm/agency-cover.svg"
 description: "Rebranded an entire real estate agency website, built a fully customized CRM covering leads, sales, emails, tasks, projects, and financials, then layered in an AI-powered system for lead generation and automated client follow-ups."
 technicalStack:
   - Notion
@@ -17,17 +17,17 @@ outcomes:
   - "Automated lead generation using an AI-powered pipeline"
   - "Automated post-sale client follow-ups, reducing manual outreach effort significantly"
 testimonial:
-  author: "Purple Jest's Owner"
-  role: "Purple Jest Real Estate"
+  author: "Agency owner"
+  role: "Real estate · name withheld"
   content: "This project transformed every part of how we operate. From our brand to our back office to how we generate and follow up with leads, everything is sharper, faster, and more professional than ever before."
 ---
 
 
-> **Privacy note:** The client's name has been changed to protect their identity. All project details are shared with permission.
+> **Privacy note:** The client's name is withheld at their request. All project details are shared with permission.
 
 ## The Challenge
 
-Purple Jest is a real estate agency that had outgrown its tools. Their website no longer reflected who they were, their client data lived across disconnected systems, and their team was spending too much time on repetitive tasks that could - and should - be automated.
+The agency had outgrown its tools. Their website no longer reflected who they were, their client data lived across disconnected systems, and their team was spending too much time on repetitive tasks that could - and should - be automated.
 
 They needed more than a quick fix. They needed a ground-up transformation: a refreshed brand, a powerful operations system, and intelligent automation that could work in the background while their team focused on closing deals.
 
@@ -45,18 +45,18 @@ Every element was considered: visual identity, copywriting tone, page structure,
 
 <div class="live-site-wrapper">
   <a href="https://purple-jest.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-mockup">
-    <img src="/images/case-studies/purple-jest/mockup.png" alt="Purple Jest website mockup" />
+    <img src="/images/case-studies/property-agency-crm/mockup.png" alt="The rebranded agency website" />
   </a>
   <a href="https://purple-jest.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-btn">View the live website ↗</a>
 </div>
 
 ### 2. Fully Customized CRM System
 
-At the core of the project is a bespoke CRM system, built entirely around Purple Jest's workflows. Rather than forcing the team to adapt to off-the-shelf software, we built a system that works exactly the way they do.
+At the core of the project is a bespoke CRM system, built entirely around the agency's own workflows. Rather than forcing the team to adapt to off-the-shelf software, we built a system that works exactly the way they do.
 
 The CRM opens with a live dashboard: a single view showing monthly income, occupancy rate, active leads, and current vacancies, so the whole team starts every day with a clear picture of where things stand.
 
-![CRM Dashboard - monthly income, occupancy, active leads, and vacancies at a glance](/images/case-studies/purple-jest/dashboard.png)
+![CRM Dashboard - monthly income, occupancy, active leads, and vacancies at a glance](/images/case-studies/property-agency-crm/dashboard.png)
 
 The system is built around six core modules:
 
@@ -69,27 +69,27 @@ The system is built around six core modules:
 
 **Properties & Listings** - all units, each with occupancy status, rent, and assigned agent tracked in real time.
 
-![Properties & Listings - full portfolio filterable by status, district, and agent](/images/case-studies/purple-jest/properties-listings.png)
+![Properties & Listings - full portfolio filterable by status, district, and agent](/images/case-studies/property-agency-crm/properties-listings.png)
 
 **Leads & Applicants** - every enquiry moves through a kanban board from New → Viewing → Applied → Offered → Archived, with lead source and fit score visible on each card.
 
-![Leads & Applicants - kanban pipeline with source tracking and a 42% conversion rate](/images/case-studies/purple-jest/leads-applicants.png)
+![Leads & Applicants - kanban pipeline with source tracking and a 42% conversion rate](/images/case-studies/property-agency-crm/leads-applicants.png)
 
 **Calendar** : viewings, signings, open houses, and internal standups all in one shared calendar, colour-coded so the team always knows what type of appointment they're looking at.
 
-![Calendar - week view with viewings, signings, and open houses colour-coded by type](/images/case-studies/purple-jest/calendar.png)
+![Calendar - week view with viewings, signings, and open houses colour-coded by type](/images/case-studies/property-agency-crm/calendar.png)
 
 **Inbox** : client messages are linked to the property and lead they relate to, so no reply ever goes out without the full picture.
 
-![Inbox - correspondence linked to properties and leads, with threaded conversation view](/images/case-studies/purple-jest/inbox.png)
+![Inbox - correspondence linked to properties and leads, with threaded conversation view](/images/case-studies/property-agency-crm/inbox.png)
 
 **Reports & Analytics** - shows the revenue of a certain period configured by user (6months, a year...etc)
 
-![Reports & Analytics - revenue, profit, days on market, and lead-to-lease over six months](/images/case-studies/purple-jest/reports-analytics.png)
+![Reports & Analytics - revenue, profit, days on market, and lead-to-lease over six months](/images/case-studies/property-agency-crm/reports-analytics.png)
 
 **Team** : all agents and team members, each with their own profile showing active listings, open leads, and upcoming events, so management always knows who's carrying what.
 
-![Team - six agent profiles with listings, leads, and event counts](/images/case-studies/purple-jest/team.png)
+![Team - six agent profiles with listings, leads, and event counts](/images/case-studies/property-agency-crm/team.png)
 
 ### 3. AI-Powered Automation
 
@@ -105,7 +105,7 @@ Given the scale of the system, onboarding was a major focus. We delivered struct
 
 ## Outcome
 
-Purple Jest now operates with a brand that reflects their ambition and a back office that runs with precision. Their team spends less time on admin and more time with clients. New leads come in automatically. Follow-ups go out without anyone having to remember. And everything, from a new inquiry to a closed deal, lives in one connected system.
+The agency now operates with a brand that reflects their ambition and a back office that runs with precision. Their team spends less time on admin and more time with clients. New leads come in automatically. Follow-ups go out without anyone having to remember. And everything, from a new inquiry to a closed deal, lives in one connected system.
 
 It is the most comprehensive project we have built to date, and it shows what is possible when brand, operations, and AI come together.
 
