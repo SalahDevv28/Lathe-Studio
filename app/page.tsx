@@ -177,10 +177,13 @@ export default async function HomePage() {
                 className="rounded border border-bone bg-ink/55 backdrop-blur-[3px]"
               >
                 <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
-                  <span className="mono text-[#C9C4B6]">Hrs saved / person / wk</span>
+                  <span className="mono text-[#C9C4B6]">Saved per person, each week</span>
                   <span className="font-display text-[34px] leading-none tracking-[-0.03em] text-lime">
                     <span className="mono mr-1.5 align-middle text-[#C9C4B6]">up to</span>
                     <Counter value={11} />
+                    {/* Unit keeps the value's colour but drops in size, so the
+                        numeral stays the thing the eye lands on. */}
+                    <span className="ml-1 align-middle text-[16px]">hrs</span>
                   </span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
@@ -477,13 +480,11 @@ export default async function HomePage() {
 
           {/* ---------------------------------------- FAQ */}
           <section id="faq" className="border-b border-line scroll-mt-16">
-            {/* Centred header rather than the split .shead used elsewhere —
-                the whole section reads as one centred column. */}
-            <div className="border-b-2 border-ink px-7 pb-8 pt-14 text-center">
-              <Reveal as="h2" style={{ fontSize: 'clamp(28px, 4.2vw, 48px)' }}>
-                Questions
-              </Reveal>
-              <Reveal as="p" delay={0.1} className="mx-auto mt-4 max-w-[46ch] text-[15.5px] text-grey">
+            {/* Header keeps the split .shead used by every other section;
+                only the questions below it are centred. */}
+            <div className="shead">
+              <Reveal as="h2">Questions</Reveal>
+              <Reveal as="p" delay={0.1}>
                 The ones that come up on nearly every first call.
               </Reveal>
             </div>
