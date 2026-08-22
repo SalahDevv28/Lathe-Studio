@@ -47,7 +47,7 @@ const proof = [
   },
   {
     was: 'Weekly status reports written by hand',
-    now: 'Up to 11 hours back per engineer, every week',
+    now: 'Up to 11 hours back per employee, every week',
     source: 'Meridian · engineering',
   },
 ]
@@ -208,7 +208,7 @@ export default async function HomePage() {
                 <span className="mono mr-1.5 align-middle text-[#A8A499]">up to</span>
                 <Counter value={11} />
               </b>
-              <span className="text-[14px] text-[#A8A499]">hours back, per engineer, weekly</span>
+              <span className="text-[14px] text-[#A8A499]">hours back, per employee, weekly</span>
             </div>
             <div className="flex items-baseline gap-3 border-b border-line-dark py-4 pr-6 sm:border-b-0 sm:border-r sm:pl-6">
               <b className="font-display text-[25px] leading-none tracking-[-0.03em] text-lime">
@@ -344,7 +344,7 @@ export default async function HomePage() {
                   <Counter value={11} suffix=" hours" />
                 </b>
                 <span className="max-w-[26ch] text-[18px] text-grey">
-                  back every week for every engineer on the Meridian team.
+                  back every week, for every employee on the team.
                 </span>
               </Reveal>
             </div>

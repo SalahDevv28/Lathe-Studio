@@ -19,22 +19,18 @@ interface Step {
   validate?: (value: string) => string | null
 }
 
+/* Order is deliberate. The easy, low-commitment answers come first so there is
+   something invested before we ask for contact details; the email sits second
+   to last, late enough not to feel like a toll gate but not so late that it
+   collides with the open-ended question people spend longest on. */
 const steps: Step[] = [
   {
     id: 'name',
     question: 'First — what should we call you?',
     type: 'text',
     placeholder: 'Your name',
-    validate: (v) => (v.trim().length < 2 ? 'A name helps us reply properly.' : null),
-  },
-  {
-    id: 'email',
-    question: 'Where should the reply go?',
-    hint: 'One email, within 24 hours. Nothing else, ever.',
-    type: 'email',
-    placeholder: 'you@company.com',
     validate: (v) =>
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : 'That address looks incomplete.',
+      v.trim().length < 2 ? 'Just so we know who we’re speaking with.' : null,
   },
   {
     id: 'company',
@@ -47,7 +43,7 @@ const steps: Step[] = [
   {
     id: 'projectType',
     question: 'What are you after?',
-    hint: 'Pick the closest. We’ll work out the detail on the call.',
+    hint: 'Pick the closest. We’ll work out the detail together on the call.',
     type: 'choice',
     options: [
       { value: 'website', label: 'A website', note: 'Design, build and handover' },
@@ -56,16 +52,29 @@ const steps: Step[] = [
       { value: 'website-notion', label: 'Website + workspace', note: 'The two, talking to each other' },
       { value: 'unsure', label: 'Not sure yet', note: 'Most people start here' },
     ],
-    validate: (v) => (v ? null : 'Pick one to carry on.'),
+    validate: (v) => (v ? null : 'Pick the closest one — we’ll refine it together.'),
+  },
+  {
+    id: 'email',
+    question: 'Where should we send your answer?',
+    hint: 'One reply, within 24 hours, from a person. No list, no follow-up sequence.',
+    type: 'email',
+    placeholder: 'you@company.com',
+    validate: (v) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+        ? null
+        : 'That address looks incomplete — we’d hate for the reply to bounce.',
   },
   {
     id: 'message',
     question: 'What’s not working right now?',
-    hint: 'A couple of sentences is plenty. The messier it is, the more useful it is.',
+    hint: 'A couple of sentences is plenty. The messier the situation, the more there is for us to fix.',
     type: 'textarea',
     placeholder: 'We keep re-entering the same job details in three places…',
     validate: (v) =>
-      v.trim().length < 10 ? 'A little more detail makes the call worth having.' : null,
+      v.trim().length < 10
+        ? 'A little more detail helps us understand your setup before we speak.'
+        : null,
   },
 ]
 

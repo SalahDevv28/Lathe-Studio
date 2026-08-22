@@ -8,6 +8,27 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  async redirects() {
+    // Case studies were renamed from positional slugs to client names.
+    // 308s so the old URLs keep any link equity they picked up.
+    return [
+      {
+        source: '/case-studies/first-case-study',
+        destination: '/case-studies/raynor-landing-solutions',
+        permanent: true,
+      },
+      {
+        source: '/case-studies/second-case-study',
+        destination: '/case-studies/purple-jest',
+        permanent: true,
+      },
+      {
+        source: '/case-studies/third-case-study',
+        destination: '/case-studies/meridian-engineering',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

@@ -3,7 +3,7 @@ title: "Full-Scale Rebrand, Custom CRM & AI Automation for a Real Estate Agency"
 date: "18-04-2026"
 client: "Purple Jest (name changed to protect client privacy)"
 category: "Real Estate Technology"
-featuredImage: "/images/case-studies/second-case-study/purplejest-cover.svg"
+featuredImage: "/images/case-studies/purple-jest/purplejest-cover.svg"
 description: "Rebranded an entire real estate agency website, built a fully customized CRM covering leads, sales, emails, tasks, projects, and financials, then layered in an AI-powered system for lead generation and automated client follow-ups."
 technicalStack:
   - Notion
@@ -45,7 +45,7 @@ Every element was considered: visual identity, copywriting tone, page structure,
 
 <div class="live-site-wrapper">
   <a href="https://purple-jest.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-mockup">
-    <img src="/images/case-studies/second-case-study/362_1x_shots_so.png" alt="Purple Jest website mockup" />
+    <img src="/images/case-studies/purple-jest/mockup.png" alt="Purple Jest website mockup" />
   </a>
   <a href="https://purple-jest.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-btn">View the live website ↗</a>
 </div>
@@ -56,7 +56,7 @@ At the core of the project is a bespoke CRM system, built entirely around Purple
 
 The CRM opens with a live dashboard: a single view showing monthly income, occupancy rate, active leads, and current vacancies, so the whole team starts every day with a clear picture of where things stand.
 
-![CRM Dashboard - monthly income, occupancy, active leads, and vacancies at a glance](/images/case-studies/second-case-study/dashboard.png)
+![CRM Dashboard - monthly income, occupancy, active leads, and vacancies at a glance](/images/case-studies/purple-jest/dashboard.png)
 
 The system is built around six core modules:
 
@@ -69,27 +69,27 @@ The system is built around six core modules:
 
 **Properties & Listings** - all units, each with occupancy status, rent, and assigned agent tracked in real time.
 
-![Properties & Listings - full portfolio filterable by status, district, and agent](/images/case-studies/second-case-study/properties-listings.png)
+![Properties & Listings - full portfolio filterable by status, district, and agent](/images/case-studies/purple-jest/properties-listings.png)
 
 **Leads & Applicants** - every enquiry moves through a kanban board from New → Viewing → Applied → Offered → Archived, with lead source and fit score visible on each card.
 
-![Leads & Applicants - kanban pipeline with source tracking and a 42% conversion rate](/images/case-studies/second-case-study/leads-applicants.png)
+![Leads & Applicants - kanban pipeline with source tracking and a 42% conversion rate](/images/case-studies/purple-jest/leads-applicants.png)
 
 **Calendar** : viewings, signings, open houses, and internal standups all in one shared calendar, colour-coded so the team always knows what type of appointment they're looking at.
 
-![Calendar - week view with viewings, signings, and open houses colour-coded by type](/images/case-studies/second-case-study/calendar.png)
+![Calendar - week view with viewings, signings, and open houses colour-coded by type](/images/case-studies/purple-jest/calendar.png)
 
 **Inbox** : client messages are linked to the property and lead they relate to, so no reply ever goes out without the full picture.
 
-![Inbox - correspondence linked to properties and leads, with threaded conversation view](/images/case-studies/second-case-study/inbox.png)
+![Inbox - correspondence linked to properties and leads, with threaded conversation view](/images/case-studies/purple-jest/inbox.png)
 
 **Reports & Analytics** - shows the revenue of a certain period configured by user (6months, a year...etc)
 
-![Reports & Analytics - revenue, profit, days on market, and lead-to-lease over six months](/images/case-studies/second-case-study/reports-analytics.png)
+![Reports & Analytics - revenue, profit, days on market, and lead-to-lease over six months](/images/case-studies/purple-jest/reports-analytics.png)
 
 **Team** : all agents and team members, each with their own profile showing active listings, open leads, and upcoming events, so management always knows who's carrying what.
 
-![Team - six agent profiles with listings, leads, and event counts](/images/case-studies/second-case-study/team.png)
+![Team - six agent profiles with listings, leads, and event counts](/images/case-studies/purple-jest/team.png)
 
 ### 3. AI-Powered Automation
 

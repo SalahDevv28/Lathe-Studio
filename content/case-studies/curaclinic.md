@@ -3,7 +3,7 @@ title: "CuraClinic - Complete Clinic Management System"
 date: "06-05-2026"
 client: "CuraClinic"
 category: "Healthcare Technology"
-featuredImage: "/images/case-studies/CuraClinic-case-study/curaclinic-cover-v2.svg"
+featuredImage: "/images/case-studies/curaclinic/curaclinic-cover-v2.svg"
 description: "Built a comprehensive clinic management system for appointment scheduling, patient records, staff task management, automated reminders, and post-visit follow-ups, designed to reduce missed appointments and streamline daily operations."
 technicalStack:
   - Front-end stack (ts, js, tailwind, nextjs ..etc)
@@ -30,7 +30,7 @@ We built a complete clinic management system tailored specifically for CuraClini
 
 <div class="live-site-wrapper">
   <a href="https://cura-clinic.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-mockup">
-    <img src="/images/case-studies/CuraClinic-case-study/dashboard.png" alt="CuraClinic live website" />
+    <img src="/images/case-studies/curaclinic/dashboard.png" alt="CuraClinic live website" />
   </a>
   <a href="https://cura-clinic.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-site-btn">View the live mock-up website ↗</a>
 </div>
@@ -39,7 +39,7 @@ We built a complete clinic management system tailored specifically for CuraClini
 
 The dashboard gives the clinic staff an instant overview of the day. It shows today's scheduled appointments, pending tasks, and upcoming follow-ups at a glance, so the team starts every shift with full visibility of what needs attention.
 
-![Dashboard - daily overview with today's appointments, pending tasks, and follow-ups](/images/case-studies/CuraClinic-case-study/dashboard.png)
+![Dashboard - daily overview with today's appointments, pending tasks, and follow-ups](/images/case-studies/curaclinic/dashboard.png)
 
 ### 2. Appointment Scheduling
 
@@ -47,39 +47,39 @@ The appointment system allows staff to create, edit, reschedule, and cancel appo
 
 The calendar view provides a visual overview of the entire month, making it simple to spot busy days and manage the clinic's schedule at a glance.
 
-![Appointments Calendar - monthly view showing appointment distribution across days](/images/case-studies/CuraClinic-case-study/calendar-appointments.png)
+![Appointments Calendar - monthly view showing appointment distribution across days](/images/case-studies/curaclinic/calendar-appointments.png)
 
 A detailed table view lists all appointments with patient names, visit types, durations, and current status, giving staff full control over the daily schedule.
 
-![Appointments Table - detailed list view with patient info, visit types, and status](/images/case-studies/CuraClinic-case-study/table-view-appointments.png)
+![Appointments Table - detailed list view with patient info, visit types, and status](/images/case-studies/curaclinic/table-view-appointments.png)
 
 ### 3. Patient Database
 
 All patient information is stored in a centralized, searchable database. Each patient card displays contact details, date of birth, and visit count, giving staff immediate context before any appointment.
 
-![Patients - searchable database with patient cards showing contact info and visit history](/images/case-studies/CuraClinic-case-study/patients.png)
+![Patients - searchable database with patient cards showing contact info and visit history](/images/case-studies/curaclinic/patients.png)
 
 Clicking into any patient opens a detailed view with full contact information, medical history, and a complete visit log. This ensures that doctors and nurses always have the full picture before seeing a patient.
 
-![Patient Detail - comprehensive view with medical history and visit notes](/images/case-studies/CuraClinic-case-study/patient-detail.png)
+![Patient Detail - comprehensive view with medical history and visit notes](/images/case-studies/curaclinic/patient-detail.png)
 
 ### 4. Task Management
 
 Clinic staff can create and assign tasks with priorities and due dates. The system tracks pending, in-progress, and completed tasks, ensuring that administrative work, follow-ups, and internal processes never fall through the cracks.
 
-![Tasks - staff task list with priorities, assignees, and status tracking](/images/case-studies/CuraClinic-case-study/tasks.png)
+![Tasks - staff task list with priorities, assignees, and status tracking](/images/case-studies/curaclinic/tasks.png)
 
 ### 5. Automated Reminders
 
 The system includes a reminders module that lists all upcoming appointments with one-click options to send reminder notifications. This helps reduce no-shows and keeps patients informed about their scheduled visits.
 
-![Reminders - upcoming appointments with quick-send reminder buttons](/images/case-studies/CuraClinic-case-study/reminders.png)
+![Reminders - upcoming appointments with quick-send reminder buttons](/images/case-studies/curaclinic/reminders.png)
 
 ### 6. Follow-up Tracking
 
 After each visit, the system tracks required follow-ups with clear status indicators: pending, overdue, or completed. Staff can see at a glance which patients need follow-up care and ensure nothing is missed.
 
-![Follow-ups - post-visit tracking with overdue alerts and completion status](/images/case-studies/CuraClinic-case-study/follow-ups.png)
+![Follow-ups - post-visit tracking with overdue alerts and completion status](/images/case-studies/curaclinic/follow-ups.png)
 
 ## Design Principles
 

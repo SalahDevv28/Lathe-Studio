@@ -6,6 +6,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/motion/ScrollProgress'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import { BRAND, BRAND_URL } from '@/lib/brand'
 
 const archivo = Archivo({
@@ -131,6 +132,8 @@ const organizationSchema = {
   },
 }
 
+const gaId = process.env.NEXT_PUBLIC_GA_ID
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -160,8 +163,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <Footer />
 
+        {/* Vercel Web Analytics. The component is inert until Analytics is
+            switched on for the project in the Vercel dashboard. */}
         <Analytics />
         <SpeedInsights />
+
+        {/* GA4 runs only where NEXT_PUBLIC_GA_ID is configured. */}
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   )
