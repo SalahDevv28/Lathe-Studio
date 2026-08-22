@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF2FA"/>
+      <stop offset="100%" stop-color="#F3E1EC"/>
+    </linearGradient>
+
+    <linearGradient id="sidebar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#212223"/>
+      <stop offset="100%" stop-color="#161717"/>
+    </linearGradient>
+
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BC548C"/>
+      <stop offset="100%" stop-color="#953F65"/>
+    </linearGradient>
+
+    <radialGradient id="ambient1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F3ABD3" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#F3ABD3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ambient2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#953F65" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#953F65" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="cardShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#5B2A45" flood-opacity="0.28"/>
+    </filter>
+    <filter id="cardShadowSm" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#5B2A45" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- base -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="960" cy="120" rx="380" ry="260" fill="url(#ambient1)"/>
+  <ellipse cx="780" cy="520" rx="360" ry="220" fill="url(#ambient2)"/>
+
+  <!-- left sidebar strip (echoes the app's nav) -->
+  <rect x="0" y="0" width="150" height="630" fill="url(#sidebar)"/>
+  <circle cx="75" cy="64" r="16" fill="url(#roseGrad)"/>
+  <text x="75" y="70" font-family="Geist, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="800" fill="#FBF2FA" text-anchor="middle">C</text>
+
+  <g fill="#3A3B3C">
+    <rect x="47" y="120" width="56" height="34" rx="10"/>
+    <rect x="47" y="168" width="56" height="34" rx="10"/>
+    <rect x="47" y="216" width="56" height="34" rx="10"/>
+    <rect x="47" y="264" width="56" height="34" rx="10"/>
+  </g>
+  <rect x="47" y="120" width="56" height="34" rx="10" fill="#BC548C" fill-opacity="0.22" stroke="#BC548C" stroke-width="1.5"/>
+  <rect x="59" y="132" width="32" height="10" rx="5" fill="#F3ABD3"/>
+  <rect x="59" y="180" width="32" height="10" rx="5" fill="#4A4B4C"/>
+  <rect x="59" y="228" width="32" height="10" rx="5" fill="#4A4B4C"/>
+  <rect x="59" y="276" width="32" height="10" rx="5" fill="#4A4B4C"/>
+
+  <!-- text block -->
+  <text x="200" y="118" font-family="Geist, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#953F65">HEALTHCARE TECHNOLOGY</text>
+  <text x="197" y="208" font-family="Geist, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="72" font-weight="800" fill="#1B1C1C">CuraClinic</text>
+  <text x="200" y="250" font-family="Geist, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="400" fill="#84747C">Complete Clinic Management System</text>
+
+  <!-- back card (depth) -->
+  <g transform="translate(430,330) rotate(4)" filter="url(#cardShadowSm)">
+    <rect x="0" y="0" width="360" height="210" rx="20" fill="#F3ABD3" fill-opacity="0.55"/>
+  </g>
+
+  <!-- front dashboard mockup card, echoing the real product UI -->
+  <g transform="translate(560,300) rotate(-3)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="420" height="260" rx="22" fill="#FFFFFF"/>
+
+    <!-- card header -->
+    <rect x="24" y="22" width="90" height="22" rx="11" fill="#F3ABD3" fill-opacity="0.35"/>
+    <text x="35" y="37" font-family="Geist, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#953F65">Today</text>
+
+    <!-- overlapping patient avatars -->
+    <circle cx="330" cy="33" r="15" fill="#F3ABD3"/>
+    <circle cx="352" cy="33" r="15" fill="#BC548C"/>
+    <circle cx="374" cy="33" r="15" fill="#953F65"/>
+    <circle cx="392" cy="33" r="15" fill="#1B1C1C"/>
+    <text x="392" y="37" font-family="Geist, Inter, Arial, sans-serif" font-size="10" font-weight="700" fill="#FBF2FA" text-anchor="middle">+8</text>
+
+    <!-- stat tiles -->
+    <g>
+      <rect x="24" y="70" width="112" height="72" rx="14" fill="#FBF2FA"/>
+      <text x="40" y="102" font-family="Geist, Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#1B1C1C">128</text>
+      <text x="40" y="122" font-family="Geist, Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#84747C">Patients</text>
+
+      <rect x="148" y="70" width="112" height="72" rx="14" fill="#FBF2FA"/>
+      <text x="164" y="102" font-family="Geist, Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#1B1C1C">42</text>
+      <text x="164" y="122" font-family="Geist, Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#84747C">Appointments</text>
+
+      <rect x="272" y="70" width="124" height="72" rx="14" fill="url(#roseGrad)"/>
+      <text x="288" y="102" font-family="Geist, Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#FBF2FA">98%</text>
+      <text x="288" y="122" font-family="Geist, Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#F3ABD3">On-time rate</text>
+    </g>
+
+    <!-- appointment list rows -->
+    <g>
+      <rect x="24" y="160" width="372" height="1" fill="#EFE3ED"/>
+      <circle cx="34" cy="182" r="4" fill="#BC548C"/>
+      <rect x="48" y="176" width="150" height="8" rx="4" fill="#3A3B3C"/>
+      <rect x="330" y="176" width="66" height="14" rx="7" fill="#F3ABD3" fill-opacity="0.35"/>
+
+      <circle cx="34" cy="212" r="4" fill="#84747C"/>
+      <rect x="48" y="206" width="120" height="8" rx="4" fill="#84747C" fill-opacity="0.6"/>
+      <rect x="330" y="206" width="66" height="14" rx="7" fill="#F3E1EC"/>
+
+      <circle cx="34" cy="242" r="4" fill="#84747C"/>
+      <rect x="48" y="236" width="170" height="8" rx="4" fill="#84747C" fill-opacity="0.4"/>
+      <rect x="330" y="236" width="66" height="14" rx="7" fill="#F3E1EC"/>
+    </g>
+  </g>
+
+  <!-- bottom meta row -->
+  <line x1="200" y1="560" x2="1120" y2="560" stroke="#953F65" stroke-opacity="0.15" stroke-width="1"/>
+  <text x="200" y="592" font-family="Geist, Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#84747C">SNT SOLUTIONS</text>
+  <text x="1120" y="592" font-family="Geist, Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#84747C" text-anchor="end">CASE STUDY</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#37352F" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- base: plain Notion-style white canvas -->
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+
+  <!-- eyebrow -->
+  <text x="80" y="150" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3.5" fill="#337EA9">REAL ESTATE AGENCY</text>
+
+  <!-- title -->
+  <text x="77" y="240" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="66" font-weight="800" fill="#37352F">Raynor Landing</text>
+  <text x="77" y="316" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="66" font-weight="800" fill="#37352F">Solutions</text>
+
+  <!-- subtitle -->
+  <text x="80" y="364" font-family="Inter, Arial, sans-serif" font-size="20" fill="#787774">Centralized task &amp; project system, built entirely in Notion</text>
+
+  <!-- page icon, Notion-style pastel square with document glyph -->
+  <g transform="translate(80,414)">
+    <rect x="0" y="0" width="56" height="56" rx="14" fill="#D3E5EF"/>
+    <rect x="15" y="13" width="26" height="32" rx="3" fill="#FFFFFF" stroke="#337EA9" stroke-width="1.5"/>
+    <line x1="21" y1="22" x2="35" y2="22" stroke="#337EA9" stroke-width="2" stroke-linecap="round"/>
+    <line x1="21" y1="28" x2="35" y2="28" stroke="#337EA9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M21,36 L24,39 L35,29" fill="none" stroke="#448361" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- bottom meta row -->
+  <line x1="80" y1="558" x2="1120" y2="558" stroke="#EDEDEC" stroke-width="1"/>
+  <text x="80" y="588" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="1" fill="#9B9A97">SNT SOLUTIONS</text>
+  <text x="1120" y="588" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="1" fill="#9B9A97" text-anchor="end">CASE STUDY</text>
+
+  <!-- signature: abstract cascading "block stack" motif, evoking Notion's block-based structure without recreating any real UI -->
+  <g filter="url(#softShadow)">
+    <rect x="760" y="70" width="360" height="52" rx="12" fill="#DBEDDB"/>
+    <rect x="800" y="140" width="320" height="52" rx="12" fill="#D3E5EF"/>
+    <rect x="760" y="210" width="280" height="52" rx="12" fill="#E8DEEE"/>
+    <rect x="820" y="280" width="300" height="52" rx="12" fill="#FADEC9"/>
+    <rect x="760" y="350" width="240" height="52" rx="12" fill="#FBF3DB"/>
+    <rect x="800" y="420" width="320" height="52" rx="12" fill="#FAF1F5"/>
+    <rect x="760" y="490" width="200" height="52" rx="12" fill="#E9E9E7"/>
+  </g>
+
+  <!-- small check glyphs inside a couple of blocks for a light organizational cue -->
+  <path d="M786,96 L792,102 L802,90" fill="none" stroke="#448361" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M826,166 L832,172 L842,160" fill="none" stroke="#337EA9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="794" cy="376" r="6" fill="none" stroke="#B58B00" stroke-width="2.5"/>
+</svg>

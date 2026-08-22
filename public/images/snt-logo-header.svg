@@ -1,0 +1,34 @@
+<svg width="100%" viewBox="0 0 268 268" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>SNT network icon, bordered and centered</title>
+<desc>A near-black rounded square with a thin gradient border outline, a gradient hub centered in the middle of the icon, connected by eleven thicker gradient lines of varied non-sequential length to eleven outer nodes of varying size at irregular positions</desc>
+<defs>
+  <linearGradient id="gk" x1="20" y1="40" x2="220" y2="220" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#8B5CF6"/>
+    <stop offset="1" stop-color="#F0467A"/>
+  </linearGradient>
+</defs>
+<rect x="4" y="4" width="260" height="260" rx="48" fill="#0B0A12" stroke="url(#gk)" stroke-width="3"/>
+<line x1="132" y1="132" x2="214" y2="132" stroke="url(#gk)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="191" y2="170" stroke="url(#gk)" stroke-width="5.5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="169" y2="216" stroke="url(#gk)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="121" y2="199" stroke="url(#gk)" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="75" y2="195" stroke="url(#gk)" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="62" y2="151" stroke="url(#gk)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="46" y2="104" stroke="url(#gk)" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="91" y2="81" stroke="url(#gk)" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="123" y2="45" stroke="url(#gk)" stroke-width="5.5" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="166" y2="65" stroke="url(#gk)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<line x1="132" y1="132" x2="201" y2="92" stroke="url(#gk)" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+<circle cx="214" cy="132" r="8" fill="url(#gk)"/>
+<circle cx="191" cy="170" r="11" fill="url(#gk)"/>
+<circle cx="169" cy="216" r="6" fill="url(#gk)"/>
+<circle cx="121" cy="199" r="9" fill="url(#gk)"/>
+<circle cx="75" cy="195" r="12" fill="url(#gk)"/>
+<circle cx="62" cy="151" r="7" fill="url(#gk)"/>
+<circle cx="46" cy="104" r="9" fill="url(#gk)"/>
+<circle cx="91" cy="81" r="6" fill="url(#gk)"/>
+<circle cx="123" cy="45" r="10" fill="url(#gk)"/>
+<circle cx="166" cy="65" r="8" fill="url(#gk)"/>
+<circle cx="201" cy="92" r="7" fill="url(#gk)"/>
+<circle cx="132" cy="132" r="14" fill="url(#gk)"/>
+</svg>
