@@ -473,7 +473,13 @@ export default async function HomePage() {
 
                   <blockquote className="mb-6 mt-2 text-[17.5px] leading-[1.5] text-ink">
                     {t.lead}{' '}
-                    <span className="ser text-teal">{t.highlight}</span>
+                    {/* Same face as the rest of the quote — the emphasis comes
+                        from the lime highlight, not a change of typeface.
+                        box-decoration-clone keeps the padding and radius intact
+                        on every line when the highlight wraps. */}
+                    <mark className="box-decoration-clone rounded-[2px] bg-lime px-1.5 py-0.5 font-medium text-teal">
+                      {t.highlight}
+                    </mark>
                     {t.tail}
                   </blockquote>
 
