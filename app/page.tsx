@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { getAllCaseStudies } from '@/lib/mdx-utils'
 import { BRAND } from '@/lib/brand'
+import { featuredFaqs } from '@/lib/faq'
 import Reveal from '@/components/motion/Reveal'
 import Counter from '@/components/motion/Counter'
 import DragRail from '@/components/motion/DragRail'
@@ -97,29 +98,6 @@ const testimonials = [
   },
 ]
 
-/* Mirrors the answers on /faq so the two pages cannot drift apart. */
-const faqs = [
-  {
-    q: 'How long does a project usually take?',
-    a: 'Most projects are completed within 1–4 weeks, depending on complexity and scope. The expected timeline is written into the Scope of Work before anything starts.',
-  },
-  {
-    q: 'Do we need all three services?',
-    a: 'No. Most clients start with the single thing that hurts most. Because it is one studio, the second piece plugs into the first instead of becoming another silo.',
-  },
-  {
-    q: 'Can I request changes after the project?',
-    a: 'Yes. You get up to two free edits within the first month after completion. Additional edits can be arranged separately.',
-  },
-  {
-    q: 'Will this replace my staff?',
-    a: 'That is not what we build. Automation takes the repetitive middle of a job. Judgement, relationships and the awkward edge cases stay with your people — that is where their value is.',
-  },
-  {
-    q: 'How do you keep my data private?',
-    a: 'All project material is kept confidential. We ask for consent before showing any project publicly, and we never use your real data in the screenshots.',
-  },
-]
 
 /* ------------------------------------------------------------------ page */
 
@@ -508,14 +486,14 @@ export default async function HomePage() {
             </div>
 
             <div className="mx-auto w-full max-w-[780px] px-7 pb-16 pt-10">
-              {faqs.map((faq, i) => (
-                <Reveal key={faq.q} delay={i * 0.06}>
+              {featuredFaqs.map((faq, i) => (
+                <Reveal key={faq.question} delay={i * 0.06}>
                   <details
                     open={i === 0}
                     className="group mb-3 overflow-hidden rounded border border-line bg-clay transition-colors hover:border-[#BEB7A5] open:border-ink open:bg-bone"
                   >
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-left text-[17.5px] font-semibold leading-[1.35] transition-colors hover:text-teal [&::-webkit-details-marker]:hidden">
-                      <span>{faq.q}</span>
+                      <span>{faq.question}</span>
                       <span
                         className="shrink-0 font-mono text-[14px] text-teal group-open:text-ink"
                         aria-hidden="true"
@@ -525,7 +503,7 @@ export default async function HomePage() {
                       </span>
                     </summary>
                     <p className="mx-6 border-t border-line py-5 text-left text-[16px] leading-[1.62] text-grey">
-                      {faq.a}
+                      {faq.answer}
                     </p>
                   </details>
                 </Reveal>
