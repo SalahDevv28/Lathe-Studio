@@ -21,7 +21,6 @@ testimonial:
   content: "We went from juggling multiple tools to having everything in one place. The AI features alone have saved us hours every week on outreach and follow-ups."
 ---
 
-# Case Study 3: Meridian Team (UK Engineering)
 
 ## The Challenge
 

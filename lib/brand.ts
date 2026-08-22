@@ -9,8 +9,9 @@ export const BRAND = {
   name: 'The Lathe Studio',
   /** Spoken / short form, used where space is tight. */
   short: 'Lathe',
-  /** TODO: confirm on a registrar before launch. */
-  domain: 'lathestudio.com',
+  /** The live deployment. Swap for the custom domain once it is secured —
+   *  this one string drives canonical, OG and sitemap URLs. */
+  domain: 'lathe-studio.vercel.app',
   email: 'salahdevv@gmail.com',
   calendly: 'https://calendly.com/salahdevv/request-a-call',
   /**

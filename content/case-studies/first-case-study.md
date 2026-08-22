@@ -18,7 +18,6 @@ testimonial:
   content: "“It was a pleasure to collaborate with SNT Solutions. They took the time to understand my requirements, offered a reasonable price, and fulfilled all their promises. They maintained clear communication throughout and scheduled feedback sessions effectively. I truly appreciated their positive attitude!” "
 ---
 
-# Case Study 1: Real Estate Agency
 
 ## The Challenge
 

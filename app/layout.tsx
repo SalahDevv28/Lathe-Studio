@@ -70,13 +70,14 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     locale: 'en_GB',
     type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: title }],
+    /* Images come from app/opengraph-image.tsx, which Next generates and wires
+       up automatically. Listing a path here would override it — and the file it
+       used to point at never existed. */
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -91,6 +92,45 @@ export const metadata: Metadata = {
   },
 }
 
+/**
+ * Organization / ProfessionalService schema.
+ *
+ * Tells search engines what this business is, rather than leaving them to infer
+ * it from copy. Sits in the root layout so it is present on every page.
+ */
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${BRAND_URL}/#organization`,
+  name: BRAND.name,
+  alternateName: BRAND.short,
+  url: BRAND_URL,
+  logo: `${BRAND_URL}/images/brand/lathe-mark-color.svg`,
+  image: `${BRAND_URL}/opengraph-image`,
+  description,
+  email: BRAND.email,
+  priceRange: '££',
+  areaServed: 'Worldwide',
+  knowsAbout: [
+    'Notion workspace design',
+    'Business process automation',
+    'AI workflow automation',
+    'Web design and development',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Services',
+    itemListElement: [
+      'Modern websites',
+      'Notion systems',
+      'AI automations',
+    ].map((service) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: service },
+    })),
+  },
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -98,6 +138,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${archivoBlack.variable} ${instrument.variable} ${jetbrains.variable}`}
     >
       <body className="flex min-h-screen flex-col antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(/</g, '\\u003c'),
+          }}
+        />
+
         <ScrollProgress />
 
         {/* Film grain across the whole page, multiplied over everything. */}

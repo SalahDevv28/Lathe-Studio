@@ -17,7 +17,6 @@ outcomes:
   - "Structured follow-up tracking to ensure continuity of care"
 ---
 
-# CuraClinic - Complete Clinic Management System
 
 ## The Challenge
 

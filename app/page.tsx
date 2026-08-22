@@ -135,7 +135,7 @@ export default async function HomePage() {
                   <ul>
                     <li>websites</li>
                     <li>workspaces</li>
-                    <li>AI agents</li>
+                    <li>AI automations</li>
                     <li>websites</li>
                   </ul>
                 </span>
@@ -432,8 +432,8 @@ export default async function HomePage() {
             <div className="shead">
               <Reveal as="h2">What clients say</Reveal>
               <Reveal as="p" delay={0.1}>
-                Three projects, three industries. Each quote comes from the case study of
-                the same name.
+                Three projects, three industries. Every quote comes from a client whose
+                case study you can read in full.
               </Reveal>
             </div>
 

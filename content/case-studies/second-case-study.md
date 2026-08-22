@@ -22,7 +22,6 @@ testimonial:
   content: "This project transformed every part of how we operate. From our brand to our back office to how we generate and follow up with leads, everything is sharper, faster, and more professional than ever before."
 ---
 
-# Case Study 2: Purple Jest (Real Estate Agency)
 
 > **Privacy note:** The client's name has been changed to protect their identity. All project details are shared with permission.
 
