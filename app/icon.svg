@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 35 112 112" width="32" height="32"><title>The Lathe Studio favicon 32px</title><rect x="52" y="35" width="112" height="112" fill="#1A1A16"/><path d="M58 58 H98 A42 42 0 0 1 140 100 L140 142 H58 Z" fill="#F4F2EC"/><path d="M98 44 A56 56 0 0 1 154 100" fill="none" stroke="#D8FF3E" stroke-width="15" stroke-linecap="round"/><circle cx="98" cy="100" r="9" fill="#1A1A16"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 33 114 114" width="32" height="32">
+  <title>The Lathe Studio</title>
+  <style>
+    /* No background plate — the mark sits directly on the tab. The body
+       inverts with the browser theme so it stays visible either way; the
+       lime arc reads against both, so it never changes. */
+    .body { fill: #1A1A16; }
+    .spindle { fill: #F4F2EC; }
+    @media (prefers-color-scheme: dark) {
+      .body { fill: #F4F2EC; }
+      .spindle { fill: #1A1A16; }
+    }
+  </style>
+  <path class="body" d="M58 58 H98 A42 42 0 0 1 140 100 L140 142 H58 Z"/>
+  <path d="M98 44 A56 56 0 0 1 154 100" fill="none" stroke="#D8FF3E" stroke-width="13" stroke-linecap="round"/>
+  <circle class="spindle" cx="98" cy="100" r="8"/>
+</svg>
