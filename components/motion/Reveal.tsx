@@ -11,6 +11,8 @@ interface RevealProps {
   /** Fraction of the element that must be visible before it fires. */
   threshold?: number
   className?: string
+  /** Merged with the delay custom property rather than replacing it. */
+  style?: React.CSSProperties
 }
 
 /**
@@ -27,6 +29,7 @@ export default function Reveal({
   delay = 0,
   threshold = 0.15,
   className = '',
+  style,
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null)
   const [shown, setShown] = useState(false)
@@ -59,7 +62,7 @@ export default function Reveal({
     <Tag
       ref={ref}
       className={`rise ${shown ? 'in' : ''} ${className}`.trim()}
-      style={delay ? ({ '--d': `${delay}s` } as React.CSSProperties) : undefined}
+      style={{ ...(delay ? ({ '--d': `${delay}s` } as React.CSSProperties) : null), ...style }}
     >
       {children}
     </Tag>

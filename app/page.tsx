@@ -68,6 +68,34 @@ const process = [
   },
 ]
 
+/* Verbatim from the `testimonial` blocks in content/case-studies, split so the
+   middle clause can be set in the serif accent face. The Raynor quote opens by
+   naming the old studio name, so it is excerpted from the sentence after —
+   shortened, never reworded. */
+const testimonials = [
+  {
+    lead: 'They took the time to understand my requirements, offered a reasonable price, and',
+    highlight: 'fulfilled all their promises',
+    tail: '. They maintained clear communication throughout and scheduled feedback sessions effectively.',
+    author: 'Jai Raynor',
+    role: 'Founder, Raynor Lending Solutions',
+  },
+  {
+    lead: 'This project transformed every part of how we operate. From our brand to our back office to how we generate and follow up with leads, everything is',
+    highlight: 'sharper, faster, and more professional',
+    tail: ' than ever before.',
+    author: 'Agency owner',
+    role: 'Real estate · name withheld',
+  },
+  {
+    lead: 'We went from juggling multiple tools to',
+    highlight: 'having everything in one place',
+    tail: '. The AI features alone have saved us hours every week on outreach and follow-ups.',
+    author: 'Team lead',
+    role: 'Meridian · engineering',
+  },
+]
+
 /* Mirrors the answers on /faq so the two pages cannot drift apart. */
 const faqs = [
   {
@@ -367,7 +395,7 @@ export default async function HomePage() {
                       <i className="mt-2 block h-px w-full bg-teal" />
                     </span>
                     <span className="text-[17px] font-semibold">
-                      <em className="rounded-[2px] not-italic px-1.5 [background:#D8FF3E]">
+                      <em className="rounded-[2px] not-italic px-1.5 bg-lime">
                         {row.now}
                       </em>
                       <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-grey">
@@ -469,97 +497,93 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* ---------------------------------------- STUDIO */}
-          <section id="studio" className="border-b border-line scroll-mt-16">
+          {/* ---------------------------------------- TESTIMONIALS */}
+          <section id="testimonials" className="border-b border-line scroll-mt-16">
             <div className="shead">
-              <Reveal as="h2">Who you’ll actually work with</Reveal>
+              <Reveal as="h2">What clients say</Reveal>
               <Reveal as="p" delay={0.1}>
-                One studio, one person on the call. No account managers, no handoffs.
+                Three projects, three industries. Each quote comes from the case study of
+                the same name.
               </Reveal>
             </div>
 
-            <div className="grid lg:grid-cols-[340px_1fr]">
-              <Reveal className="flex flex-col gap-3.5 border-b border-line px-7 py-9 lg:border-b-0 lg:border-r">
-                <div className="aspect-[4/5] overflow-hidden rounded border-2 border-ink bg-clay">
-                  <svg viewBox="0 0 320 400" className="h-full w-full" aria-label="Founder portrait placeholder">
-                    <rect width="320" height="400" fill="#E8E4D8" />
-                    <circle cx="160" cy="150" r="74" fill="#1A1A16" />
-                    <path d="M40 400c0-72 54-124 120-124s120 52 120 124z" fill="#1A1A16" />
-                    <circle cx="160" cy="150" r="74" fill="#0F9E8E" opacity=".3" />
-                    <path d="M40 400c0-72 54-124 120-124s120 52 120 124z" fill="#D8FF3E" opacity=".18" />
-                  </svg>
-                </div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-grey">
-                  <b className="mb-1 block font-sans text-[16px] normal-case tracking-normal text-ink">
-                    Salah — founder
-                  </b>
-                  Designs it, builds it, runs the call
-                </div>
-                <span className="inline-block self-start rounded-[2px] border border-dashed border-teal px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-teal">
-                  Placeholder — replace with a real photo
-                </span>
-              </Reveal>
-
-              <Reveal delay={0.1} className="flex flex-col justify-center px-8 py-10">
-                <blockquote
-                  className="mb-6 max-w-[26ch] font-display leading-[1.2] tracking-[-0.03em]"
-                  style={{ fontSize: 'clamp(22px, 3.2vw, 38px)' }}
+            <div className="grid md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <Reveal
+                  key={t.author}
+                  delay={i * 0.1}
+                  className="flex flex-col border-b border-line px-6 pb-8 pt-8 transition-colors last:border-b-0 hover:bg-clay md:border-b-0 md:border-r md:last:border-r-0"
                 >
-                  “They took the time to understand my requirements, offered a reasonable
-                  price, and <span className="ser text-teal">fulfilled all their promises</span>.”
-                </blockquote>
-                <div className="flex items-center gap-3.5">
-                  <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-ink bg-clay">
-                    <svg viewBox="0 0 64 64" className="h-full w-full">
-                      <rect width="64" height="64" fill="#E8E4D8" />
-                      <circle cx="32" cy="25" r="13" fill="#1A1A16" />
-                      <path d="M6 64c0-14 12-24 26-24s26 10 26 24z" fill="#1A1A16" />
-                    </svg>
+                  <span
+                    className="select-none font-display leading-none text-lime"
+                    style={{ fontSize: 46 }}
+                    aria-hidden="true"
+                  >
+                    “
                   </span>
-                  <div>
-                    <b className="block text-[15px]">Jai Raynor</b>
-                    <span className="text-[13.5px] text-grey">
-                      Founder, Raynor Lending Solutions
+
+                  <blockquote className="mb-6 mt-2 text-[17.5px] leading-[1.5] text-ink">
+                    {t.lead}{' '}
+                    <span className="ser text-teal">{t.highlight}</span>
+                    {t.tail}
+                  </blockquote>
+
+                  <div className="mt-auto border-t border-line pt-4">
+                    <b className="block text-[15px] font-semibold">{t.author}</b>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-grey">
+                      {t.role}
                     </span>
                   </div>
-                </div>
-              </Reveal>
+                </Reveal>
+              ))}
             </div>
           </section>
 
           {/* ---------------------------------------- FAQ */}
           <section id="faq" className="border-b border-line scroll-mt-16">
-            <div className="shead">
-              <Reveal as="h2">Questions</Reveal>
-              <Reveal as="p" delay={0.1}>
+            {/* Centred header rather than the split .shead used elsewhere —
+                the whole section reads as one centred column. */}
+            <div className="border-b-2 border-ink px-7 pb-8 pt-14 text-center">
+              <Reveal as="h2" style={{ fontSize: 'clamp(28px, 4.2vw, 48px)' }}>
+                Questions
+              </Reveal>
+              <Reveal as="p" delay={0.1} className="mx-auto mt-4 max-w-[46ch] text-[15.5px] text-grey">
                 The ones that come up on nearly every first call.
               </Reveal>
             </div>
 
-            <div className="max-w-[920px] px-7 pb-14 pt-8">
+            <div className="mx-auto w-full max-w-[780px] px-7 pb-16 pt-10">
               {faqs.map((faq, i) => (
                 <Reveal key={faq.q} delay={i * 0.06}>
-                  <details className="group mb-3 rounded border border-line bg-clay transition-colors open:border-ink open:bg-bone hover:border-[#BEB7A5]">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-[17.5px] font-semibold leading-[1.35] transition-colors hover:text-teal [&::-webkit-details-marker]:hidden">
-                      {faq.q}
-                      <span className="shrink-0 font-mono text-[14px] text-teal group-open:text-ink">
+                  <details
+                    open={i === 0}
+                    className="group mb-3 overflow-hidden rounded border border-line bg-clay transition-colors hover:border-[#BEB7A5] open:border-ink open:bg-bone"
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-left text-[17.5px] font-semibold leading-[1.35] transition-colors hover:text-teal [&::-webkit-details-marker]:hidden">
+                      <span>{faq.q}</span>
+                      <span
+                        className="shrink-0 font-mono text-[14px] text-teal group-open:text-ink"
+                        aria-hidden="true"
+                      >
                         <span className="group-open:hidden">[+]</span>
                         <span className="hidden group-open:inline">[−]</span>
                       </span>
                     </summary>
-                    <p className="mx-6 max-w-[68ch] border-t border-line py-4 text-[16px] leading-[1.62] text-grey">
+                    <p className="mx-6 border-t border-line py-5 text-left text-[16px] leading-[1.62] text-grey">
                       {faq.a}
                     </p>
                   </details>
                 </Reveal>
               ))}
 
-              <Link
-                href="/faq"
-                className="mono mt-6 inline-block text-teal transition-colors hover:text-ink"
-              >
-                All questions →
-              </Link>
+              <div className="mt-8 text-center">
+                <Link
+                  href="/faq"
+                  className="mono text-teal transition-colors hover:text-ink"
+                >
+                  All questions →
+                </Link>
+              </div>
             </div>
           </section>
         </div>

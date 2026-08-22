@@ -10,7 +10,7 @@ const services = [
 
 const company = [
   { name: 'Work', href: '/case-studies' },
-  { name: 'Studio', href: '/#studio' },
+  { name: 'Clients', href: '/#testimonials' },
   { name: 'FAQ', href: '/faq' },
 ]
 
