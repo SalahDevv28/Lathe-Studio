@@ -1,159 +1,177 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
-import { NavItem } from '@/lib/types'
+import BrandMark from '@/components/BrandMark'
+import { BRAND } from '@/lib/brand'
+import type { NavItem } from '@/lib/types'
 
+/* /blog is intentionally absent: there are no posts yet, and linking to an
+   empty index reads as an abandoned site. Restore it the moment one lands. */
 const navigation: NavItem[] = [
-  { name: 'Blog', href: '/blog' },
-  { name: 'Case Studies', href: '/case-studies' },
+  { name: 'Work', href: '/case-studies' },
   { name: 'FAQ', href: '/faq' },
   { name: 'Contact', href: '/contact' },
 ]
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const drawerRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // Close the drawer whenever the route changes.
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    if (!open) return
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
+    const previouslyFocused = document.activeElement as HTMLElement | null
+    document.body.style.overflow = 'hidden'
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+
+      // Keep focus inside the drawer while it is open.
+      const focusables = drawerRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])'
+      )
+      if (!focusables || focusables.length === 0) return
+
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
-    
+
+    document.addEventListener('keydown', onKeyDown)
+    // Move focus into the drawer so the keyboard lands somewhere sensible.
+    drawerRef.current?.querySelector<HTMLElement>('a[href], button')?.focus()
+
     return () => {
-      document.body.style.overflow = 'unset'
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = ''
+      previouslyFocused?.focus?.()
     }
-  }, [isMenuOpen])
+  }, [open])
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-background/90 backdrop-blur-md border-b border-gray-800/50'
-            : 'bg-background/60 backdrop-blur-sm'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center group gap-2">
-              <img
-                src="/images/snt-logo-header.svg"
-                alt="SNT Solutions"
-                className="h-8 w-8 object-cover"
-              />
-              <span className="font-heading font-bold text-xl text-white group-hover:text-purple-300 transition-colors">
-                SNT Solutions
-              </span>
-            </Link>
+      <header className="on-ink sticky top-0 z-[90] border-b border-ink bg-ink text-bone">
+        <div className="wrap flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5" aria-label={BRAND.name}>
+            <BrandMark className="h-7 w-7 shrink-0" tone="bone" />
+            <span className="font-display text-[19px] tracking-[-0.02em]">LATHE</span>
+          </Link>
 
-            {/* Desktop Navigation - Right aligned with CTA */}
-            <div className="hidden md:flex items-center space-x-6">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium relative ${
-                    pathname === item.href ? 'text-purple-400' : ''
-                  }`}
-                >
-                  {item.name}
-                  {pathname === item.href && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></div>
-                  )}
-                </Link>
-              ))}
-              <a
-                href="https://calendly.com/salahdevv/request-a-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`border-b-2 py-1 font-medium uppercase transition-colors ${
+                  isActive(item.href)
+                    ? 'border-lime text-bone'
+                    : 'border-transparent text-[#B9B5A8] hover:border-lime hover:text-bone'
+                }`}
+                style={{ fontSize: 13, letterSpacing: '0.06em' }}
               >
-                Book a discovery call
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-gray-300 hover:text-white transition-colors rounded-lg hover:bg-white/10"
-              aria-label="Toggle menu"
+                {item.name}
+              </Link>
+            ))}
+            <a
+              href={BRAND.calendly}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded bg-lime px-[18px] py-2.5 font-semibold uppercase text-ink transition-colors hover:bg-bone"
+              style={{ fontSize: 13, letterSpacing: '0.06em' }}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+              Book a call
+            </a>
+          </nav>
+
+          <button
+            ref={toggleRef}
+            onClick={() => setOpen(true)}
+            className="rounded p-2 text-bone transition-colors hover:bg-white/10 lg:hidden"
+            aria-label="Open menu"
+            aria-expanded={open}
+          >
+            <Menu size={22} />
+          </button>
         </div>
       </header>
 
-      {/* Mobile Navigation — backdrop + slide-in drawer */}
-      {isMenuOpen && (
+      {open && (
         <>
-          {/* Backdrop */}
           <div
-            className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[59]"
-            onClick={() => setIsMenuOpen(false)}
+            className="fixed inset-0 z-[95] bg-black/60 lg:hidden"
+            onClick={() => setOpen(false)}
           />
 
-          {/* Drawer */}
-          <div className="md:hidden fixed top-0 right-0 h-full w-72 bg-[#0f0f14] border-l border-white/10 z-[60] flex flex-col shadow-2xl shadow-black/50">
-            {/* Drawer header */}
-            <div className="flex items-center justify-between px-6 h-16 border-b border-white/10">
-              <span className="font-heading font-bold text-white">Menu</span>
+          <div
+            ref={drawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            className="on-ink fixed right-0 top-0 z-[96] flex h-full w-72 flex-col border-l border-line-dark bg-ink text-bone lg:hidden"
+          >
+            <div className="flex h-16 items-center justify-between border-b border-line-dark px-7">
+              <span className="mono text-[#B9B5A8]">Menu</span>
               <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/10"
+                onClick={() => setOpen(false)}
+                className="rounded p-2 transition-colors hover:bg-white/10"
                 aria-label="Close menu"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Nav links */}
-            <nav className="flex-1 flex flex-col justify-center px-6 gap-2">
+            <nav className="flex flex-1 flex-col gap-1 px-5 pt-6" aria-label="Mobile">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 ${
-                    pathname === item.href
-                      ? 'bg-purple-600/10 border border-purple-500/30 text-purple-300'
-                      : 'text-gray-300 hover:bg-white/5 hover:text-white border border-transparent'
+                  onClick={() => setOpen(false)}
+                  className={`rounded border-l-2 px-4 py-3.5 font-semibold uppercase transition-colors ${
+                    isActive(item.href)
+                      ? 'border-lime bg-white/5 text-bone'
+                      : 'border-transparent text-[#B9B5A8] hover:bg-white/5 hover:text-bone'
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  style={{ fontSize: 14, letterSpacing: '0.06em' }}
                 >
                   {item.name}
-                  {pathname === item.href && (
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
-                  )}
                 </Link>
               ))}
             </nav>
 
-            {/* CTA */}
-            <div className="px-6 pb-8 pt-4 border-t border-white/10">
+            <div className="border-t border-line-dark p-5">
               <a
-                href="https://calendly.com/salahdevv/request-a-call"
+                href={BRAND.calendly}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-3.5 px-6 rounded-xl hover:from-pink-600 hover:to-rose-600 transition-all duration-300 text-sm"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => setOpen(false)}
+                className="block rounded bg-lime px-5 py-3.5 text-center font-semibold uppercase text-ink"
+                style={{ fontSize: 13, letterSpacing: '0.06em' }}
               >
-                Book a discovery call
+                Book a call
               </a>
             </div>
           </div>

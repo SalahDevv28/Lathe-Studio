@@ -1,77 +1,92 @@
 import Link from 'next/link'
+import BrandMark from '@/components/BrandMark'
+import { BRAND } from '@/lib/brand'
 
-const footerLinks = {
-  services: [
-    { name: 'Building Websites', href: '/#services' },
-    { name: 'Customized Notion Systems', href: '/#services' },
-    { name: 'AI Agents & Automations', href: '/#services' },
-  ],
-  company: [
-    { name: 'Home', href: '/' },
-    { name: 'Case Studies', href: '/case-studies' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Contact', href: '/contact' },
-  ],
-}
+const services = [
+  { name: 'Modern websites', href: '/#services' },
+  { name: 'Notion systems', href: '/#services' },
+  { name: 'AI automations', href: '/#services' },
+]
+
+const company = [
+  { name: 'Work', href: '/case-studies' },
+  { name: 'Studio', href: '/#studio' },
+  { name: 'FAQ', href: '/faq' },
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Brand */}
-          <div className="col-span-1 lg:col-span-1">
-            <Link href="/" className="flex items-center mb-4">
-              <span className="font-heading font-bold text-xl text-white">
-                SNT Solutions
-              </span>
-            </Link>
-            <p className="text-gray-400 text-sm mb-6 max-w-xs">
-              Building intelligent digital solutions with modern websites,
-              customized Notion systems, and AI automations.
-            </p>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="font-heading font-semibold text-white mb-4">Services</h3>
-            <ul className="space-y-2">
-              {footerLinks.services.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="font-heading font-semibold text-white mb-4">Company</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-sm text-center">
-            © 2026 SNT. All rights reserved.
+    <footer className="on-ink bg-ink text-bone">
+      <div className="wrap grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div>
+          <Link href="/" className="mb-4 flex items-center gap-2.5" aria-label={BRAND.name}>
+            <BrandMark className="h-7 w-7 shrink-0" tone="bone" />
+            <span className="font-display text-[19px] uppercase tracking-[-0.02em]">
+              {BRAND.name}
+            </span>
+          </Link>
+          <p className="max-w-[34ch] text-[15px] text-[#A8A499]">
+            Digital systems studio. Websites, Notion workspaces and AI automation for
+            teams that have outgrown their spreadsheets.
           </p>
         </div>
+
+        <div>
+          <h2 className="mono mb-3.5 text-lime">Services</h2>
+          {services.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="block py-1.5 text-[15px] text-[#B9B5A8] transition-colors hover:text-bone"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <h2 className="mono mb-3.5 text-teal">Company</h2>
+          {company.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="block py-1.5 text-[15px] text-[#B9B5A8] transition-colors hover:text-bone"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <h2 className="mono mb-3.5 text-lime">Contact</h2>
+          <a
+            href={BRAND.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block py-1.5 text-[15px] text-[#B9B5A8] transition-colors hover:text-bone"
+          >
+            Book a call
+          </a>
+          <Link
+            href="/contact"
+            className="block py-1.5 text-[15px] text-[#B9B5A8] transition-colors hover:text-bone"
+          >
+            Send a message
+          </Link>
+          <a
+            href={`mailto:${BRAND.email}`}
+            className="block py-1.5 text-[15px] text-[#B9B5A8] transition-colors hover:text-bone"
+          >
+            {BRAND.email}
+          </a>
+        </div>
+      </div>
+
+      <div className="wrap flex flex-col justify-between gap-3 border-t border-line-dark py-4 sm:flex-row">
+        <span className="mono text-[#8C887C]">
+          © {new Date().getFullYear()} {BRAND.name}
+        </span>
+        <span className="mono text-[#8C887C]">{BRAND.domain}</span>
       </div>
     </footer>
   )

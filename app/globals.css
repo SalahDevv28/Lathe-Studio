@@ -1,581 +1,446 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@100..900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================== BASE */
+
 @layer base {
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-text-size-adjust: 100%;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', system-ui, sans-serif;
-  }
-  
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bone text-ink font-sans;
+    font-size: 17px;
+    line-height: 1.62;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 0.94;
+  }
+
+  h1 {
+    text-transform: uppercase;
+  }
+
+  /* Visible, on-brand focus ring. Sections on the dark band opt into a lime
+     ring instead, so it never vanishes against ink. */
+  :focus-visible {
+    outline: 2px solid #0f9e8e;
+    outline-offset: 3px;
+  }
+
+  .on-ink :focus-visible {
+    outline-color: #d8ff3e;
+  }
+
+  ::selection {
+    background: #d8ff3e;
+    color: #1a1a16;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e8e4d8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6e6a5e;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1a1a16;
   }
 }
+
+/* ======================================================== COMPONENTS */
 
 @layer components {
-  .btn-primary {
-    @apply bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+  .wrap {
+    @apply mx-auto w-full max-w-wrap px-7;
   }
-  
-  .btn-secondary {
-    @apply bg-transparent border-2 border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl;
+
+  /* Mono eyebrow / label text. */
+  .mono {
+    @apply font-mono uppercase;
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
   }
-  
-  .card {
-    @apply bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:scale-105;
+
+  /* Instrument Serif italic — the accent voice inside display headings. */
+  .ser {
+    @apply font-serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: -0.01em;
   }
-  
-  .portal-entrance {
-    background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%);
+
+  .btn {
+    @apply inline-flex items-center gap-2.5 rounded border border-ink font-semibold uppercase;
+    padding: 15px 26px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    transition: background 0.22s, color 0.22s, transform 0.18s, border-color 0.22s;
   }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-purple-400 to-accent-400 bg-clip-text text-transparent;
+  .btn:active {
+    transform: translateY(2px);
+  }
+
+  .btn-lime {
+    @apply border-ink bg-lime text-ink;
+  }
+  .btn-lime:hover {
+    @apply bg-ink text-lime;
+  }
+
+  .btn-line:hover {
+    @apply bg-ink text-bone;
+  }
+
+  /* On the dark band the outline button inverts. */
+  .on-ink .btn-line {
+    @apply border-bone text-bone;
+  }
+  .on-ink .btn-line:hover {
+    @apply bg-bone text-ink;
+  }
+
+  /* Section header: title left, standfirst right, heavy rule beneath. */
+  .shead {
+    @apply flex flex-wrap items-end justify-between border-b-2 border-ink px-7;
+    gap: 30px;
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+  .shead h2 {
+    font-size: clamp(28px, 4.2vw, 48px);
+  }
+  .shead p {
+    @apply max-w-[36ch] text-grey;
+    font-size: 15.5px;
+  }
+
+  .on-ink .shead {
+    @apply border-bone;
+  }
+  .on-ink .shead p {
+    color: #a8a499;
   }
 }
+
+/* ========================================================= UTILITIES */
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* --- Reveal on scroll. <Reveal> adds .in once the element intersects. --- */
+  .rise {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--d, 0s);
+  }
+  .rise.in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- Hero stripe fields ---------------------------------------------
+     Two diagonal layers descending at different speeds so lime and teal
+     drift in and out of phase. Oversized on every side so the 45 degree
+     bands never reveal an edge while travelling. */
+  .stripes,
+  .stripes-2 {
+    position: absolute;
+    inset: -620px;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  .stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0 30px,
+      rgba(216, 255, 62, 0.13) 30px 60px
+    );
+    @apply animate-stripes-lime;
+  }
+  .stripes-2 {
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(15, 158, 142, 0.17) 0 10px,
+      transparent 10px 44px
+    );
+    @apply animate-stripes-teal;
+  }
+
+  /* --- Film grain over the whole page. --- */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
+  /* --- Word roller in the h1. --- */
+  .roll {
+    display: inline-block;
+    height: 0.92em;
+    line-height: 0.92em;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding: 0 0.1em;
+    border-radius: 2px;
+    @apply bg-lime text-ink;
+  }
+  .roll ul {
+    @apply animate-roll list-none;
+  }
+  .roll li {
+    height: 0.92em;
+    line-height: 0.92em;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-block;
+    white-space: nowrap;
+    @apply animate-marquee;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* =================================================== REDUCED MOTION
+   Anything that loops forever settles; reveals collapse to an instant
+   state change rather than disappearing. */
+@media (prefers-reduced-motion: reduce) {
+  .stripes,
+  .stripes-2,
+  .roll ul,
+  .marquee-track {
+    animation: none !important;
+  }
+  .rise {
+    transition: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
+/* ==================================================== LONGFORM PROSE
+   One definition serving both case studies and blog posts. Replaces the
+   two near-identical 200-line blocks the dark theme carried. */
+
+.prose-editorial h1,
+.prose-editorial h2,
+.prose-editorial h3 {
+  font-family: var(--font-archivo-black), 'Arial Black', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: #1a1a16;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #8B5CF6;
+.prose-editorial h1 {
+  font-size: 2rem;
+  margin: 3rem 0 1rem;
+}
+
+.prose-editorial h2 {
+  font-size: 1.6rem;
+  margin: 2.75rem 0 0.85rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid #0f9e8e;
+}
+
+.prose-editorial h3 {
+  font-size: 1.2rem;
+  margin: 1.9rem 0 0.5rem;
+}
+
+.prose-editorial h4,
+.prose-editorial h5,
+.prose-editorial h6 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-weight: 600;
+  color: #26261f;
+  margin: 1.3rem 0 0.5rem;
+}
+
+.prose-editorial p {
+  color: #26261f;
+  line-height: 1.72;
+  margin-bottom: 1.2rem;
+}
+
+.prose-editorial strong {
+  color: #1a1a16;
+  font-weight: 600;
+}
+
+.prose-editorial em {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  color: #0f9e8e;
+}
+
+.prose-editorial ul,
+.prose-editorial ol {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.2rem;
+}
+
+.prose-editorial ul li,
+.prose-editorial ol li {
+  color: #26261f;
+  position: relative;
+  line-height: 1.7;
+  padding: 0.55rem 0 0.55rem 1.6rem;
+  border-top: 1px solid #d6d1c2;
+}
+
+/* Small lime square outlined in ink — the mockup's list marker. */
+.prose-editorial ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.05rem;
+  width: 7px;
+  height: 7px;
+  background: #d8ff3e;
+  border: 1px solid #1a1a16;
+  border-radius: 1px;
+}
+
+.prose-editorial ol {
+  counter-reset: step;
+}
+
+.prose-editorial ol li {
+  counter-increment: step;
+  padding-left: 2.1rem;
+}
+
+.prose-editorial ol li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.62rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #0f9e8e;
+}
+
+.prose-editorial blockquote {
+  background: #e8e4d8;
+  border-left: 4px solid #d8ff3e;
+  border-radius: 0 4px 4px 0;
+  padding: 1.1rem 1.5rem;
+  margin: 1.75rem 0;
+}
+
+.prose-editorial blockquote p {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #1a1a16;
+  margin-bottom: 0;
+}
+
+.prose-editorial code {
+  background: #e8e4d8;
+  color: #1a1a16;
+  border: 1px solid #d6d1c2;
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.86em;
+}
+
+.prose-editorial pre {
+  background: #1a1a16;
   border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #A855F7;
-}
-
-/* Loading screen logo animation (starts only after click) */
-@keyframes logoSpin {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-.animate-logo-spin {
-  animation: logoSpin 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Case studies carousel */
-@keyframes scrollLeft {
-  0%   { transform: translateX(0) }
-  100% { transform: translateX(-50%) }
-}
-.carousel-track {
-  animation: scrollLeft 28s linear infinite;
-  will-change: transform;
-}
-.carousel-track:hover {
-  animation-play-state: paused;
-}
-
-/* Selection styling */
-::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: white;
-}
-
-/* Case study markdown content */
-.case-study-content h1 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #c084fc, #f472b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  line-height: 1.25;
-}
-
-.case-study-content h2 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #c084fc, #f472b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  border-left: 3px solid #f472b6;
-  padding-left: 0.875rem;
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  line-height: 1.3;
-}
-
-.case-study-content h3 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #f9a8d4;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.case-study-content h4,
-.case-study-content h5,
-.case-study-content h6 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-weight: 600;
-  color: #e9d5ff;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.case-study-content p {
-  color: #d1d5db;
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
-  font-size: 1rem;
-}
-
-.case-study-content strong {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.case-study-content em {
-  color: #f9a8d4;
-  font-style: italic;
-}
-
-.case-study-content ul {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 1.25rem;
-}
-
-.case-study-content ul li {
-  color: #d1d5db;
-  padding-left: 1.5rem;
-  position: relative;
-  margin-bottom: 0.5rem;
-  line-height: 1.75;
-}
-
-.case-study-content ul li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: #f472b6;
-  font-size: 0.875rem;
-  top: 0.05rem;
-}
-
-.case-study-content ol {
-  list-style: none;
-  padding-left: 0;
-  counter-reset: list-counter;
-  margin-bottom: 1.25rem;
-}
-
-.case-study-content ol li {
-  color: #d1d5db;
-  padding-left: 2.25rem;
-  position: relative;
-  margin-bottom: 0.625rem;
-  line-height: 1.75;
-  counter-increment: list-counter;
-}
-
-.case-study-content ol li::before {
-  content: counter(list-counter);
-  position: absolute;
-  left: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  color: white;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  text-align: center;
-  top: 0.125rem;
-}
-
-.case-study-content blockquote {
-  background: rgba(236, 72, 153, 0.06);
-  border-left: 4px solid #ec4899;
-  border-radius: 0 0.5rem 0.5rem 0;
-  padding: 1rem 1.5rem;
-  margin: 1.75rem 0;
-  color: #e5e7eb;
-  font-style: italic;
-}
-
-.case-study-content blockquote p {
-  color: #e5e7eb;
-  margin-bottom: 0;
-}
-
-.case-study-content code {
-  background: rgba(236, 72, 153, 0.1);
-  color: #f9a8d4;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
-  border: 1px solid rgba(236, 72, 153, 0.25);
-  font-family: 'Fira Code', 'Consolas', monospace;
-}
-
-.case-study-content pre {
-  background: rgba(10, 10, 20, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.4rem;
   overflow-x: auto;
   margin: 1.75rem 0;
 }
 
-.case-study-content pre code {
+.prose-editorial pre code {
   background: none;
-  color: #e5e7eb;
   border: none;
   padding: 0;
-  font-size: 0.875rem;
+  color: #f5f1e7;
+  font-size: 0.85rem;
   line-height: 1.7;
 }
 
-.case-study-content hr {
+.prose-editorial hr {
   border: none;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.3), transparent);
+  background: #d6d1c2;
   margin: 2.5rem 0;
 }
 
-.case-study-content a {
-  color: #f472b6;
+.prose-editorial a {
+  color: #0f9e8e;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  border-bottom: 1px solid rgba(15, 158, 142, 0.4);
+  transition: border-color 0.2s, color 0.2s;
 }
 
-.case-study-content a:hover {
-  border-bottom-color: #f472b6;
+.prose-editorial a:hover {
+  color: #1a1a16;
+  border-bottom-color: #1a1a16;
 }
 
-.case-study-content .live-site-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  margin: 1.75rem 0;
-}
-
-.case-study-content .live-site-mockup {
-  display: block;
-  border-bottom: none !important;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 8px 40px rgba(168, 85, 247, 0.2);
-}
-
-.case-study-content .live-site-mockup:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 16px 48px rgba(168, 85, 247, 0.35);
-  border-bottom: none !important;
-}
-
-.case-study-content .live-site-mockup img {
-  display: block;
-  margin: 0;
-  border: none;
-  border-radius: 0;
-}
-
-.case-study-content .live-site-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 1.75rem 0;
-  padding: 0.875rem 2rem;
-  background: linear-gradient(to right, #ec4899, #f43f5e);
-  color: #ffffff !important;
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  border-radius: 0.75rem;
-  border-bottom: none !important;
-  text-decoration: none;
-  box-shadow: 0 4px 24px rgba(236, 72, 153, 0.35);
-  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.case-study-content .live-site-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(236, 72, 153, 0.45);
-  border-bottom: none !important;
-}
-
-.case-study-content img {
-  border-radius: 0.75rem;
+.prose-editorial img {
+  border: 1px solid #d6d1c2;
+  border-radius: 4px;
   max-width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: auto;
   margin: 1.75rem 0;
 }
 
-.case-study-content table {
+.prose-editorial table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.75rem 0;
+  font-size: 0.95rem;
 }
 
-.case-study-content th {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f9a8d4;
-  padding: 0.75rem 1rem;
+.prose-editorial th {
+  background: #e8e4d8;
+  color: #1a1a16;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 0.875rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 2px solid #1a1a16;
 }
 
-.case-study-content td {
-  padding: 0.75rem 1rem;
-  color: #d1d5db;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 0.9375rem;
-}
-
-.case-study-content tr:hover td {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-/* Blog markdown content */
-.blog-content h1 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #c084fc, #f472b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  line-height: 1.25;
-}
-
-.blog-content h2 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #c084fc, #f472b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  border-left: 3px solid #f472b6;
-  padding-left: 0.875rem;
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  line-height: 1.3;
-}
-
-.blog-content h3 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #f9a8d4;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.blog-content h4,
-.blog-content h5,
-.blog-content h6 {
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-weight: 600;
-  color: #e9d5ff;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.blog-content p {
-  color: #d1d5db;
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
-  font-size: 1rem;
-}
-
-.blog-content strong {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.blog-content em {
-  color: #f9a8d4;
-  font-style: italic;
-}
-
-.blog-content ul {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 1.25rem;
-}
-
-.blog-content ul li {
-  color: #d1d5db;
-  padding-left: 1.5rem;
-  position: relative;
-  margin-bottom: 0.5rem;
-  line-height: 1.75;
-}
-
-.blog-content ul li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: #f472b6;
-  font-size: 0.875rem;
-  top: 0.05rem;
-}
-
-.blog-content ol {
-  list-style: none;
-  padding-left: 0;
-  counter-reset: list-counter;
-  margin-bottom: 1.25rem;
-}
-
-.blog-content ol li {
-  color: #d1d5db;
-  padding-left: 2.25rem;
-  position: relative;
-  margin-bottom: 0.625rem;
-  line-height: 1.75;
-  counter-increment: list-counter;
-}
-
-.blog-content ol li::before {
-  content: counter(list-counter);
-  position: absolute;
-  left: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  color: white;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  text-align: center;
-  top: 0.125rem;
-}
-
-.blog-content blockquote {
-  background: rgba(236, 72, 153, 0.06);
-  border-left: 4px solid #ec4899;
-  border-radius: 0 0.5rem 0.5rem 0;
-  padding: 1rem 1.5rem;
-  margin: 1.75rem 0;
-  color: #e5e7eb;
-  font-style: italic;
-}
-
-.blog-content blockquote p {
-  color: #e5e7eb;
-  margin-bottom: 0;
-}
-
-.blog-content code {
-  background: rgba(236, 72, 153, 0.1);
-  color: #f9a8d4;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
-  border: 1px solid rgba(236, 72, 153, 0.25);
-  font-family: 'Fira Code', 'Consolas', monospace;
-}
-
-.blog-content pre {
-  background: rgba(10, 10, 20, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  overflow-x: auto;
-  margin: 1.75rem 0;
-}
-
-.blog-content pre code {
-  background: none;
-  color: #e5e7eb;
-  border: none;
-  padding: 0;
-  font-size: 0.875rem;
-  line-height: 1.7;
-}
-
-.blog-content hr {
-  border: none;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.3), transparent);
-  margin: 2.5rem 0;
-}
-
-.blog-content a {
-  color: #f472b6;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-}
-
-.blog-content a:hover {
-  border-bottom-color: #f472b6;
-}
-
-.blog-content img {
-  border-radius: 0.75rem;
-  max-width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  margin: 1.75rem 0;
-}
-
-.blog-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.75rem 0;
-}
-
-.blog-content th {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f9a8d4;
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.blog-content td {
-  padding: 0.75rem 1rem;
-  color: #d1d5db;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 0.9375rem;
-}
-
-.blog-content tr:hover td {
-  background: rgba(255, 255, 255, 0.03);
+.prose-editorial td {
+  padding: 0.7rem 1rem;
+  color: #26261f;
+  border-bottom: 1px solid #d6d1c2;
 }

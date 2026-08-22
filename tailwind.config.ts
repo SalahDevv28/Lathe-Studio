@@ -1,106 +1,74 @@
 import type { Config } from 'tailwindcss'
+
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: '#0A0A0A',
-        foreground: '#FFFFFF',
-        primary: {
-          50: '#f3e8ff',
-          100: '#e9d5ff',
-          200: '#d8b4fe',
-          300: '#c084fc',
-          400: '#a855f7',
-          500: '#9333ea',
-          600: '#8B5CF6',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
-        },
-        secondary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-        },
-        accent: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#A855F7',
-          700: '#c026d3',
-          800: '#a21caf',
-          900: '#86198f',
-        },
-        purple: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#8B5CF6',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
-        }
+        /* Warm charcoal — dark bands, and the colour of body text on bone. */
+        ink: { DEFAULT: '#1A1A16', 2: '#26261F' },
+        /* Page ground. */
+        bone: '#F5F1E7',
+        /* Raised / alternate surfaces against bone. */
+        clay: '#E8E4D8',
+        /* Primary accent. Only ever a *background* behind ink, or a mark on
+           the dark band — lime on bone is ~1.2:1 and unreadable as text. */
+        lime: '#D8FF3E',
+        /* Secondary accent. Passes AA on bone, so it may carry small text. */
+        teal: '#0F9E8E',
+        grey: '#6E6A5E',
+        line: '#D6D1C2',
+        /* Hairline on the dark band. */
+        'line-dark': '#34342C',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-archivo)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-archivo-black)', 'Arial Black', 'sans-serif'],
+        serif: ['var(--font-instrument)', 'Georgia', 'serif'],
+        mono: ['var(--font-jetbrains)', 'ui-monospace', 'monospace'],
+      },
+      borderRadius: {
+        DEFAULT: '4px',
+      },
+      maxWidth: {
+        wrap: '1240px',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'portal-glow': 'portalGlow 2s ease-in-out infinite alternate',
-        'float': 'float 3s ease-in-out infinite',
+        'stripes-lime': 'stripesLime 8s linear infinite',
+        'stripes-teal': 'stripesTeal 13s linear infinite',
+        roll: 'roll 7.5s steps(1, end) infinite',
+        marquee: 'marquee 30s linear infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        /* Travel values are measured, not derived. A whole multiple of the
+           pattern period does NOT survive the browser's rasterising of a 45°
+           gradient — textbook-correct values visibly snapped on screen. These
+           two were verified to render pixel-identical one cycle apart. Changing
+           them makes the loop restart visible. */
+        stripesLime: {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(339.41px)' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+        stripesTeal: {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(622.25px)' },
         },
-        portalGlow: {
-          '0%': {
-            'box-shadow': '0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
-            'border-color': 'rgba(139, 92, 246, 0.8)'
-          },
-          '100%': {
-            'box-shadow': '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(168, 85, 247, 0.5)',
-            'border-color': 'rgba(168, 85, 247, 1)'
-          },
+        roll: {
+          '0%, 24%': { transform: 'translateY(0)' },
+          '33%, 57%': { transform: 'translateY(-0.92em)' },
+          '66%, 90%': { transform: 'translateY(-1.84em)' },
+          '100%': { transform: 'translateY(0)' },
         },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+        marquee: {
+          to: { transform: 'translateX(-50%)' },
         },
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'portal-gradient': 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%)',
       },
     },
   },
   plugins: [],
 }
+
 export default config

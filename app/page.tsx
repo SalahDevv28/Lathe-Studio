@@ -1,210 +1,598 @@
 import Link from 'next/link'
-import {
-  ArrowRight,
-  Bot,
-  CheckCircle,
-  MessageCircle,
-  Search,
-  PenTool,
-  ZapIcon,
-  Globe,
-  Workflow,
-} from 'lucide-react'
-import SectionDivider from '@/components/SectionDivider'
-import CaseStudiesCarousel from '@/components/CaseStudiesCarousel'
+import { ArrowRight } from 'lucide-react'
+import { getAllCaseStudies } from '@/lib/mdx-utils'
+import { BRAND } from '@/lib/brand'
+import Reveal from '@/components/motion/Reveal'
+import Counter from '@/components/motion/Counter'
+import DragRail from '@/components/motion/DragRail'
+import SectionRail from '@/components/home/SectionRail'
+
+/* ------------------------------------------------------------------ data */
 
 const services = [
   {
-    icon: Globe,
-    title: 'Modern Websites',
-    description: 'We build fast, responsive, and visually stunning websites using Next.js, React, and modern web technologies. Every site is crafted to convert visitors into customers.',
-    features: ['Next.js & React', 'Responsive Design', 'SEO Optimized', 'Performance First'],
+    num: '01 / WEB',
+    title: 'Modern websites',
+    body: 'Fast, good-looking sites your customers find on Google — and your team can update without calling a developer.',
+    points: ['Design and build', 'Search visibility', 'Handover and training'],
   },
   {
-    icon: Workflow,
-    title: 'Notion Systems',
-    description: 'We transform Notion into a powerful business operations hub. Custom databases, automated workflows, and seamless integrations that keep your team organized and productive.',
-    features: ['Custom Databases', 'Workflow Automation', 'Team Training', 'Ongoing Support'],
+    num: '02 / OPS',
+    title: 'Notion systems',
+    body: 'One place for jobs, clients and documents — instead of six spreadsheets, a shared inbox and someone’s memory.',
+    points: ['Workspace design', 'Automatic updates', 'Team training'],
   },
   {
-    icon: Bot,
-    title: 'AI Automations',
-    description: 'Intelligent AI agents and automations that handle repetitive tasks, analyze data, and supercharge your workflows. We build systems that work while you sleep.',
-    features: ['AI Agents', 'Smart Workflows', 'Data Processing', 'Custom Integrations'],
+    num: '03 / AI',
+    title: 'AI automations',
+    body: 'Software that handles the repetitive middle of a job — intake, chasing, reporting — and leaves the decisions to you.',
+    points: ['Automated intake', 'Reports that write themselves', 'A person always reviews'],
   },
 ]
 
-export default function HomePage() {
-  return (
-    <div className="min-h-screen">
+/* Every row below is drawn from a real case study in content/case-studies.
+   Nothing here is illustrative. */
+const proof = [
+  {
+    was: 'Appointments kept in scattered notes and phone calls',
+    now: 'One calendar, reminders sent automatically',
+    source: 'CuraClinic · healthcare',
+  },
+  {
+    was: 'Leads, sales, email and finances in four separate tools',
+    now: 'A single CRM the whole team works from',
+    source: 'Real estate agency',
+  },
+  {
+    was: 'Weekly status reports written by hand',
+    now: '11.4 hours back per engineer, every week',
+    source: 'Meridian · engineering',
+  },
+]
 
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 lg:px-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(120,119,198,0.1),transparent_50%)]" />
-        <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <div className="animate-fade-in">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              We Build <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">You</span>
-              <br />
-              Intelligent Digital Solutions
+const process = [
+  {
+    n: '01',
+    title: 'Understand',
+    body: 'We sit with your team and map how the work really happens — including the spreadsheet nobody admits to.',
+  },
+  {
+    n: '02',
+    title: 'Design',
+    body: 'You review working screens in your own browser. No slide decks, no 40-page proposals.',
+  },
+  {
+    n: '03',
+    title: 'Automate',
+    body: 'Automation goes on last — helping the people doing the work, never quietly replacing them.',
+  },
+]
+
+/* Mirrors the answers on /faq so the two pages cannot drift apart. */
+const faqs = [
+  {
+    q: 'How long does a project usually take?',
+    a: 'Most projects are completed within 1–4 weeks, depending on complexity and scope. The expected timeline is written into the Scope of Work before anything starts.',
+  },
+  {
+    q: 'Do we need all three services?',
+    a: 'No. Most clients start with the single thing that hurts most. Because it is one studio, the second piece plugs into the first instead of becoming another silo.',
+  },
+  {
+    q: 'Can I request changes after the project?',
+    a: 'Yes. You get up to two free edits within the first month after completion. Additional edits can be arranged separately.',
+  },
+  {
+    q: 'Will this replace my staff?',
+    a: 'That is not what we build. Automation takes the repetitive middle of a job. Judgement, relationships and the awkward edge cases stay with your people — that is where their value is.',
+  },
+  {
+    q: 'How do you keep my data private?',
+    a: 'All project material is kept confidential. We ask for consent before showing any project publicly, and we never use your real data in the screenshots.',
+  },
+]
+
+/* ------------------------------------------------------------- thumbnails */
+
+/** Flat editorial cover art, one variant per card position. */
+function ThumbArt({ variant }: { variant: number }) {
+  const art = [
+    <>
+      <rect x="24" y="26" width="150" height="12" rx="2" fill="#1A1A16" opacity=".8" />
+      <rect x="24" y="50" width="96" height="8" rx="2" fill="#1A1A16" opacity=".3" />
+      <rect x="24" y="80" width="352" height="1" fill="#1A1A16" opacity=".2" />
+      <rect x="24" y="96" width="120" height="8" rx="2" fill="#1A1A16" opacity=".3" />
+      <rect x="24" y="116" width="200" height="8" rx="2" fill="#1A1A16" opacity=".3" />
+      <rect x="266" y="92" width="110" height="60" rx="3" fill="#D8FF3E" stroke="#1A1A16" />
+      <path d="M282 132l18-22 16 14 20-26" stroke="#1A1A16" strokeWidth="2" fill="none" />
+    </>,
+    <>
+      <rect x="24" y="30" width="76" height="132" rx="3" fill="#1A1A16" opacity=".1" stroke="#1A1A16" />
+      <rect x="112" y="30" width="76" height="132" rx="3" fill="#1A1A16" opacity=".1" stroke="#1A1A16" />
+      <rect x="200" y="30" width="76" height="132" rx="3" fill="#0F9E8E" stroke="#1A1A16" />
+      <rect x="288" y="30" width="76" height="132" rx="3" fill="#1A1A16" opacity=".1" stroke="#1A1A16" />
+      <rect x="210" y="44" width="52" height="8" rx="2" fill="#F5F1E7" opacity=".9" />
+    </>,
+    <>
+      <path d="M30 150 L110 110 L190 128 L270 70 L370 44" stroke="#1A1A16" strokeWidth="2.5" fill="none" />
+      <circle cx="110" cy="110" r="5" fill="#1A1A16" />
+      <circle cx="190" cy="128" r="5" fill="#1A1A16" />
+      <circle cx="270" cy="70" r="5" fill="#1A1A16" />
+      <circle cx="370" cy="44" r="7" fill="#D8FF3E" stroke="#1A1A16" strokeWidth="2" />
+    </>,
+    <>
+      <rect x="40" y="34" width="130" height="122" rx="3" fill="#1A1A16" opacity=".08" stroke="#1A1A16" />
+      <rect x="230" y="34" width="130" height="122" rx="3" fill="#D8FF3E" stroke="#1A1A16" />
+      <path d="M178 95h44" stroke="#1A1A16" strokeWidth="2" />
+      <path d="M214 87l10 8-10 8" stroke="#1A1A16" strokeWidth="2" fill="none" />
+      <rect x="54" y="52" width="90" height="7" rx="2" fill="#1A1A16" opacity=".4" />
+      <rect x="244" y="52" width="90" height="7" rx="2" fill="#1A1A16" opacity=".7" />
+    </>,
+  ][variant % 4]
+
+  const tints = ['#E8E4D8', '#DED9CB', '#E3DED0', '#DBD6C7']
+
+  return (
+    <div
+      className="relative h-[190px] border-b border-line"
+      style={{ background: tints[variant % 4] }}
+    >
+      <svg viewBox="0 0 400 190" fill="none" className="absolute inset-0 h-full w-full">
+        {art}
+      </svg>
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ page */
+
+export default async function HomePage() {
+  const caseStudies = await getAllCaseStudies()
+
+  const marqueeItems = [
+    'Modern websites',
+    'Notion systems',
+    'AI automations',
+    'Workflow design',
+    'Team training',
+  ]
+
+  return (
+    <>
+      {/* ============================================ HERO */}
+      <div className="on-ink relative overflow-hidden border-b border-ink bg-ink text-bone">
+        <div className="stripes" aria-hidden="true" />
+        <div className="stripes-2" aria-hidden="true" />
+
+        <header className="relative z-[3]">
+          <div className="wrap pt-20">
+            <Reveal as="span" delay={0.05}>
+              <span className="mono inline-flex items-center gap-2.5 rounded border-2 border-bone px-3.5 py-1.5">
+                <b className="h-[7px] w-[7px] rounded-[1px] bg-lime" />
+                Websites · Notion · AI Automation
+              </span>
+            </Reveal>
+
+            <h1 className="mt-8" style={{ fontSize: 'clamp(42px, 8vw, 108px)' }}>
+              <Reveal delay={0.12}>We build the</Reveal>
+              <Reveal delay={0.24}>
+                <span className="roll">
+                  <ul>
+                    <li>websites</li>
+                    <li>workspaces</li>
+                    <li>AI agents</li>
+                    <li>websites</li>
+                  </ul>
+                </span>
+              </Reveal>
+              <Reveal delay={0.36}>that run themselves</Reveal>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-              We help you transform your digital presence and operate at peak efficiency.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="https://calendly.com/salahdevv/request-a-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+
+            <div className="mt-11 grid items-end gap-14 pb-14 lg:grid-cols-[1.35fr_1fr]">
+              <div>
+                <Reveal delay={0.5}>
+                  <p className="max-w-[44ch] text-[19px]">
+                    One studio for the website, the workspace and the automations
+                    underneath — so nothing in your business gets typed twice.
+                  </p>
+                  <p className="mt-4 max-w-[44ch] text-[16.5px] text-[#B9B5A8]">
+                    Built for teams that have outgrown their spreadsheets but don’t want
+                    an IT department.
+                  </p>
+                </Reveal>
+
+                <Reveal delay={0.6} className="mt-7 flex flex-wrap gap-3">
+                  <a
+                    href={BRAND.calendly}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-lime"
+                  >
+                    Book a free 30-min call
+                  </a>
+                  <a href="#work" className="btn btn-line">
+                    See the work
+                  </a>
+                </Reveal>
+              </div>
+
+              <Reveal
+                delay={0.66}
+                as="aside"
+                className="rounded border border-bone bg-ink/55 backdrop-blur-[3px]"
               >
-                Book a discovery call
-                <ArrowRight className="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link
-                href="/contact"
-                className="px-8 py-4 bg-transparent border-2 border-purple-500 text-white font-semibold rounded-lg hover:bg-purple-500/20 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Get in touch
-              </Link>
+                <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
+                  <span className="mono text-[#C9C4B6]">Hrs saved / person / wk</span>
+                  <span className="font-display text-[34px] leading-none tracking-[-0.03em] text-lime">
+                    <Counter value={11.4} decimals={1} />
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
+                  <span className="mono text-teal">Tools replaced</span>
+                  <span className="font-display text-[34px] leading-none tracking-[-0.03em] text-teal">
+                    4→1
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between gap-3.5 px-5 py-4">
+                  <span className="mono text-[#C9C4B6]">Discovery call</span>
+                  <span className="font-display text-[34px] leading-none tracking-[-0.03em] text-lime">
+                    <Counter value={30} suffix="m" />
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </header>
+
+        {/* Stat bar, sharing the hero's stripe field */}
+        <div className="relative z-[3] border-t border-line-dark">
+          <div className="wrap grid sm:grid-cols-3">
+            <div className="flex items-baseline gap-3 border-b border-line-dark py-4 pr-6 sm:border-b-0 sm:border-r">
+              <b className="font-display text-[25px] leading-none tracking-[-0.03em] text-teal">
+                <Counter value={11.4} decimals={1} />
+              </b>
+              <span className="text-[14px] text-[#A8A499]">hours back, per engineer, weekly</span>
+            </div>
+            <div className="flex items-baseline gap-3 border-b border-line-dark py-4 pr-6 sm:border-b-0 sm:border-r sm:pl-6">
+              <b className="font-display text-[25px] leading-none tracking-[-0.03em] text-lime">
+                4 → 1
+              </b>
+              <span className="text-[14px] text-[#A8A499]">tools replaced by one hub</span>
+            </div>
+            <div className="flex items-baseline gap-3 py-4 sm:pl-6">
+              <b className="font-display text-[25px] leading-none tracking-[-0.03em] text-lime">
+                <Counter value={3} pad={2} />
+              </b>
+              <span className="text-[14px] text-[#A8A499]">industries shipped</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* What We Do */}
-      <section className="py-20 px-6 lg:px-24 bg-black/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-              What <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">We Do</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              We specialize in three core areas that help businesses thrive in the digital age.
-              Each service is tailored to your unique needs and goals.
+      {/* ============================================ MARQUEE */}
+      <div className="marquee overflow-hidden whitespace-nowrap border-b border-line bg-clay py-3.5">
+        <div className="marquee-track">
+          {[0, 1].map((copy) => (
+            <span key={copy}>
+              {marqueeItems.map((item) => (
+                <span key={item}>
+                  <span className="px-5 text-[14px] font-medium">{item}</span>
+                  <span className="px-5 text-teal">◆</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ============================================ POSITIONING */}
+      <div className="border-b border-line py-16">
+        <div className="wrap">
+          <Reveal>
+            <p
+              className="max-w-[24ch] font-display leading-[1.14] tracking-[-0.03em]"
+              style={{ fontSize: 'clamp(24px, 3.6vw, 44px)' }}
+            >
+              We give small teams the <span className="ser text-teal">operating system</span>{' '}
+              that big companies pay millions for.
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon
-              return (
-                <div key={index} className="group p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed mb-6">{service.description}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-300">
-                        <CheckCircle className="w-4 h-4 text-purple-400 mr-2 flex-shrink-0" />
-                        {feature}
+          </Reveal>
+        </div>
+      </div>
+
+      {/* ============================================ BODY */}
+      <div className="grid xl:grid-cols-[180px_1fr]">
+        <SectionRail />
+
+        <div className="min-w-0">
+          {/* ---------------------------------------- SERVICES */}
+          <section id="services" className="border-b border-line scroll-mt-16">
+            <div className="shead">
+              <Reveal as="h2">What we actually build</Reveal>
+              <Reveal as="p" delay={0.1}>
+                Three services that stack. Most clients start with one and end up with all
+                three talking to each other.
+              </Reveal>
+            </div>
+
+            <div className="grid md:grid-cols-3">
+              {services.map((service, i) => (
+                <Reveal
+                  key={service.title}
+                  delay={i * 0.08}
+                  className="flex flex-col border-b border-line px-6 pb-9 pt-8 transition-colors last:border-b-0 hover:bg-clay md:border-b-0 md:border-r md:last:border-r-0"
+                >
+                  <span className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-teal">
+                    {service.num}
+                  </span>
+                  <h3 className="mb-3 mt-4 text-[26px]">{service.title}</h3>
+                  <p className="text-[15.5px] text-grey">{service.body}</p>
+                  <ul className="mt-auto list-none pt-5">
+                    {service.points.map((point) => (
+                      <li
+                        key={point}
+                        className="relative border-t border-line py-2.5 pl-[18px] text-[13.5px] text-grey"
+                      >
+                        <span className="absolute left-0 top-[17px] h-[7px] w-[7px] rounded-[1px] border border-ink bg-lime" />
+                        {point}
                       </li>
                     ))}
                   </ul>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Design Philosophy */}
-      <section id="services" className="py-20 px-6 lg:px-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Design Philosophy</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              We believe in the power of AI-enhanced Notion systems to transform how businesses operate.
-              Our approach combines clean design, intelligent automation, and seamless user experiences.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Search className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">Understand First</h3>
-              <p className="text-gray-400 leading-relaxed mb-4">
-                Every great system starts with deep understanding. We take the time to learn your workflows, challenges, and goals before designing a solution.
-              </p>
-              <p className="text-gray-300 text-sm">
-                We analyze your current setup, identify pain points, and map out opportunities for AI-driven improvements.
-              </p>
+                </Reveal>
+              ))}
             </div>
-            <div className="group p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <PenTool className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">Design with Purpose</h3>
-              <p className="text-gray-400 leading-relaxed mb-4">
-                Clean, intuitive design isn&apos;t just about aesthetics, it&apos;s about creating systems that people actually want to use.
-              </p>
-              <p className="text-gray-300 text-sm">
-                We craft workspaces that are both beautiful and functional, with careful attention to user experience and information architecture.
-              </p>
+          </section>
+
+          {/* ---------------------------------------- PROOF */}
+          <section id="proof" className="border-b border-line scroll-mt-16">
+            <div className="shead">
+              <Reveal as="h2">Where the hours come from</Reveal>
+              <Reveal as="p" delay={0.1}>
+                Three real changes from three real projects. Every figure below comes from
+                a case study you can read in full.
+              </Reveal>
             </div>
-            <div className="group p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <ZapIcon className="w-8 h-8 text-white" />
+
+            <div className="bg-clay px-7 pb-12">
+              <div className="border-t-2 border-ink">
+                {proof.map((row, i) => (
+                  <Reveal
+                    key={row.was}
+                    delay={i * 0.1}
+                    className="grid items-center gap-5 border-b border-line py-6 md:grid-cols-[1fr_130px_1fr]"
+                  >
+                    <span className="text-[17px] text-grey">{row.was}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-teal md:text-center">
+                      now
+                      <i className="mt-2 block h-px w-full bg-teal" />
+                    </span>
+                    <span className="text-[17px] font-semibold">
+                      <em className="rounded-[2px] not-italic px-1.5 [background:#D8FF3E]">
+                        {row.now}
+                      </em>
+                      <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-grey">
+                        {row.source}
+                      </span>
+                    </span>
+                  </Reveal>
+                ))}
               </div>
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">Automate Intelligently</h3>
-              <p className="text-gray-400 leading-relaxed mb-4">
-                AI should enhance human work, not replace it. We build smart automations that handle repetitive tasks while preserving human creativity.
-              </p>
-              <p className="text-gray-300 text-sm">
-                From automated workflows to AI-powered insights, we create systems that learn, adapt, and make your team more productive every day.
-              </p>
+
+              <Reveal className="flex flex-wrap items-baseline gap-4 pt-8">
+                <b
+                  className="font-display leading-none tracking-[-0.04em]"
+                  style={{ fontSize: 'clamp(38px, 6vw, 74px)' }}
+                >
+                  <Counter value={11.4} decimals={1} suffix=" hours" />
+                </b>
+                <span className="max-w-[26ch] text-[18px] text-grey">
+                  back every week for every engineer on the Meridian team.
+                </span>
+              </Reveal>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <SectionDivider variant="accent" />
+          {/* ---------------------------------------- PROCESS */}
+          <section
+            id="process"
+            className="on-ink border-b border-line bg-ink text-bone scroll-mt-16"
+          >
+            <div className="shead">
+              <Reveal as="h2">How it goes</Reveal>
+              <Reveal as="p" delay={0.1}>
+                No discovery theatre. Three phases, fixed scope, visible progress.
+              </Reveal>
+            </div>
 
-      {/* Case Studies Carousel */}
-      <CaseStudiesCarousel />
+            <div className="grid gap-8 px-7 py-12 md:grid-cols-3">
+              {process.map((step, i) => (
+                <Reveal key={step.n} delay={i * 0.12} className="border-t border-line-dark pt-6">
+                  <div className="font-display text-[60px] leading-[0.9] text-lime">
+                    {i === 1 ? <span className="text-teal">{step.n}</span> : step.n}
+                  </div>
+                  <h3 className="mb-2.5 mt-4 text-[22px]">{step.title}</h3>
+                  <p className="text-[15.5px] text-[#A8A499]">{step.body}</p>
+                </Reveal>
+              ))}
+            </div>
+          </section>
 
-      <SectionDivider variant="subtle" />
+          {/* ---------------------------------------- WORK */}
+          <section id="work" className="border-b border-line scroll-mt-16">
+            <div className="shead">
+              <Reveal as="h2">Selected work</Reveal>
+              <Reveal as="p" delay={0.1}>
+                Healthcare, property, engineering. Different industries, same problem
+                underneath.
+              </Reveal>
+            </div>
 
-      {/* CTA */}
-      <section className="py-20 px-6 lg:px-24">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 md:p-12">
-            <MessageCircle className="w-16 h-16 text-pink-400 mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Ready to Start Your Project?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let&apos;s discuss your project and see how we can help bring your vision to life.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="https://calendly.com/salahdevv/request-a-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-              >
-                Book a discovery call
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-purple-500 text-white font-semibold rounded-lg hover:bg-purple-500/20 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-              >
-                Get in touch
+            <DragRail className="select-none">
+              {caseStudies.map((cs, i) => (
+                <Link
+                  key={cs.slug}
+                  href={`/case-studies/${cs.slug}`}
+                  className="group flex w-[min(400px,82vw)] shrink-0 flex-col border-r border-line pb-8 transition-colors hover:bg-clay"
+                >
+                  <ThumbArt variant={i} />
+                  <div className="flex flex-1 flex-col px-6 pt-6">
+                    {cs.category && (
+                      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-teal">
+                        {cs.category}
+                      </span>
+                    )}
+                    <h3 className="mb-3 mt-3.5 text-[29px]">{cs.title}</h3>
+                    {cs.description && (
+                      <p className="mb-auto text-[15px] text-grey line-clamp-3">
+                        {cs.description}
+                      </p>
+                    )}
+                    {Array.isArray(cs.outcomes) && cs.outcomes[0] && (
+                      <div className="mt-6 border-t border-line pt-4">
+                        <span className="text-[13.5px] text-grey">{cs.outcomes[0]}</span>
+                      </div>
+                    )}
+                    <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-ink">
+                      Read case study
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </DragRail>
+
+            <div className="flex items-center justify-between border-t border-line px-7 py-4">
+              <span className="mono text-grey">← Drag to explore</span>
+              <Link href="/case-studies" className="mono text-teal hover:text-ink">
+                All {caseStudies.length} case studies →
               </Link>
             </div>
-            <p className="text-gray-400 text-sm mt-4">Free 30-minute consultation to discuss your needs</p>
-          </div>
-        </div>
-      </section>
+          </section>
 
-    </div>
+          {/* ---------------------------------------- STUDIO */}
+          <section id="studio" className="border-b border-line scroll-mt-16">
+            <div className="shead">
+              <Reveal as="h2">Who you’ll actually work with</Reveal>
+              <Reveal as="p" delay={0.1}>
+                One studio, one person on the call. No account managers, no handoffs.
+              </Reveal>
+            </div>
+
+            <div className="grid lg:grid-cols-[340px_1fr]">
+              <Reveal className="flex flex-col gap-3.5 border-b border-line px-7 py-9 lg:border-b-0 lg:border-r">
+                <div className="aspect-[4/5] overflow-hidden rounded border-2 border-ink bg-clay">
+                  <svg viewBox="0 0 320 400" className="h-full w-full" aria-label="Founder portrait placeholder">
+                    <rect width="320" height="400" fill="#E8E4D8" />
+                    <circle cx="160" cy="150" r="74" fill="#1A1A16" />
+                    <path d="M40 400c0-72 54-124 120-124s120 52 120 124z" fill="#1A1A16" />
+                    <circle cx="160" cy="150" r="74" fill="#0F9E8E" opacity=".3" />
+                    <path d="M40 400c0-72 54-124 120-124s120 52 120 124z" fill="#D8FF3E" opacity=".18" />
+                  </svg>
+                </div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-grey">
+                  <b className="mb-1 block font-sans text-[16px] normal-case tracking-normal text-ink">
+                    Salah — founder
+                  </b>
+                  Designs it, builds it, runs the call
+                </div>
+                <span className="inline-block self-start rounded-[2px] border border-dashed border-teal px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-teal">
+                  Placeholder — replace with a real photo
+                </span>
+              </Reveal>
+
+              <Reveal delay={0.1} className="flex flex-col justify-center px-8 py-10">
+                <blockquote
+                  className="mb-6 max-w-[26ch] font-display leading-[1.2] tracking-[-0.03em]"
+                  style={{ fontSize: 'clamp(22px, 3.2vw, 38px)' }}
+                >
+                  “They took the time to understand my requirements, offered a reasonable
+                  price, and <span className="ser text-teal">fulfilled all their promises</span>.”
+                </blockquote>
+                <div className="flex items-center gap-3.5">
+                  <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-ink bg-clay">
+                    <svg viewBox="0 0 64 64" className="h-full w-full">
+                      <rect width="64" height="64" fill="#E8E4D8" />
+                      <circle cx="32" cy="25" r="13" fill="#1A1A16" />
+                      <path d="M6 64c0-14 12-24 26-24s26 10 26 24z" fill="#1A1A16" />
+                    </svg>
+                  </span>
+                  <div>
+                    <b className="block text-[15px]">Jai Raynor</b>
+                    <span className="text-[13.5px] text-grey">
+                      Founder, Raynor Lending Solutions
+                    </span>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* ---------------------------------------- FAQ */}
+          <section id="faq" className="border-b border-line scroll-mt-16">
+            <div className="shead">
+              <Reveal as="h2">Questions</Reveal>
+              <Reveal as="p" delay={0.1}>
+                The ones that come up on nearly every first call.
+              </Reveal>
+            </div>
+
+            <div className="max-w-[920px] px-7 pb-14 pt-8">
+              {faqs.map((faq, i) => (
+                <Reveal key={faq.q} delay={i * 0.06}>
+                  <details className="group mb-3 rounded border border-line bg-clay transition-colors open:border-ink open:bg-bone hover:border-[#BEB7A5]">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-[17.5px] font-semibold leading-[1.35] transition-colors hover:text-teal [&::-webkit-details-marker]:hidden">
+                      {faq.q}
+                      <span className="shrink-0 font-mono text-[14px] text-teal group-open:text-ink">
+                        <span className="group-open:hidden">[+]</span>
+                        <span className="hidden group-open:inline">[−]</span>
+                      </span>
+                    </summary>
+                    <p className="mx-6 max-w-[68ch] border-t border-line py-4 text-[16px] leading-[1.62] text-grey">
+                      {faq.a}
+                    </p>
+                  </details>
+                </Reveal>
+              ))}
+
+              <Link
+                href="/faq"
+                className="mono mt-6 inline-block text-teal transition-colors hover:text-ink"
+              >
+                All questions →
+              </Link>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* ============================================ END CTA */}
+      <section className="border-b border-line px-7 py-20 text-center">
+        <Reveal>
+          <h2
+            className="mb-5 font-display uppercase"
+            style={{ fontSize: 'clamp(34px, 6vw, 74px)' }}
+          >
+            Let’s find your <span className="ser normal-case text-teal">eleven hours</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mx-auto mb-8 max-w-[46ch] text-[17.5px] text-grey">
+            A free 30-minute call. We look at one workflow together and tell you honestly
+            whether it is worth automating.
+          </p>
+        </Reveal>
+        <Reveal delay={0.18}>
+          <a
+            href={BRAND.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-lime"
+          >
+            Book the call →
+          </a>
+          <div className="mono mt-5 text-grey">No deck · No obligation · Straight answer</div>
+        </Reveal>
+      </section>
+    </>
   )
 }
