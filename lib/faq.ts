@@ -45,7 +45,7 @@ export const faqs: Faq[] = [
   {
     question: 'What kinds of businesses do you work with?',
     answer:
-      'Mostly small and mid-sized teams that have outgrown their spreadsheets: clinics and medical practices, property and lettings agencies, engineering teams, and trades businesses such as HVAC. If your team retypes the same information into more than one place, the underlying work is much the same whatever the industry.',
+      'Mostly small and mid-sized teams that have outgrown their spreadsheets: clinics and medical practices, property and lettings agencies, and engineering teams. If your team retypes the same information into more than one place, the underlying work is much the same whatever the industry.',
     featured: true,
   },
   {

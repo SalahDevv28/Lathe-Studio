@@ -46,6 +46,7 @@ const config: Config = {
         'stripes-teal': 'stripesTeal 13s linear infinite',
         roll: 'roll 7.5s steps(1, end) infinite',
         marquee: 'marquee 30s linear infinite',
+        'step-in': 'stepIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
         /* Travel values are measured, not derived. A whole multiple of the
@@ -69,6 +70,11 @@ const config: Config = {
         },
         marquee: {
           to: { transform: 'translateX(-50%)' },
+        },
+        /* One question replacing the last in the contact flow. */
+        stepIn: {
+          from: { opacity: '0', transform: 'translateY(10px)' },
+          to: { opacity: '1', transform: 'none' },
         },
       },
     },

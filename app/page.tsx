@@ -47,7 +47,7 @@ const proof = [
   },
   {
     was: 'Weekly status reports written by hand',
-    now: '11.4 hours back per engineer, every week',
+    now: 'Up to 11 hours back per engineer, every week',
     source: 'Meridian · engineering',
   },
 ]
@@ -179,7 +179,8 @@ export default async function HomePage() {
                 <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
                   <span className="mono text-[#C9C4B6]">Hrs saved / person / wk</span>
                   <span className="font-display text-[34px] leading-none tracking-[-0.03em] text-lime">
-                    <Counter value={11.4} decimals={1} />
+                    <span className="mono mr-1.5 align-middle text-[#C9C4B6]">up to</span>
+                    <Counter value={11} />
                   </span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3.5 border-b border-bone/30 px-5 py-4">
@@ -204,7 +205,8 @@ export default async function HomePage() {
           <div className="wrap grid sm:grid-cols-3">
             <div className="flex items-baseline gap-3 border-b border-line-dark py-4 pr-6 sm:border-b-0 sm:border-r">
               <b className="font-display text-[25px] leading-none tracking-[-0.03em] text-teal">
-                <Counter value={11.4} decimals={1} />
+                <span className="mono mr-1.5 align-middle text-[#A8A499]">up to</span>
+                <Counter value={11} />
               </b>
               <span className="text-[14px] text-[#A8A499]">hours back, per engineer, weekly</span>
             </div>
@@ -338,7 +340,8 @@ export default async function HomePage() {
                   className="font-display leading-none tracking-[-0.04em]"
                   style={{ fontSize: 'clamp(38px, 6vw, 74px)' }}
                 >
-                  <Counter value={11.4} decimals={1} suffix=" hours" />
+                  <span className="mono mr-2 align-middle text-grey">up to</span>
+                  <Counter value={11} suffix=" hours" />
                 </b>
                 <span className="max-w-[26ch] text-[18px] text-grey">
                   back every week for every engineer on the Meridian team.
@@ -529,13 +532,14 @@ export default async function HomePage() {
             className="mb-5 font-display uppercase"
             style={{ fontSize: 'clamp(34px, 6vw, 74px)' }}
           >
-            Let’s find your <span className="ser normal-case text-teal">eleven hours</span>
+            Let’s get your business{' '}
+            <span className="ser normal-case text-teal">running true</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mx-auto mb-8 max-w-[46ch] text-[17.5px] text-grey">
-            A free 30-minute call. We look at one workflow together and tell you honestly
-            whether it is worth automating.
+            A free 30-minute call. We take one workflow, find where it runs rough, and
+            tell you honestly whether it is worth refining.
           </p>
         </Reveal>
         <Reveal delay={0.18}>

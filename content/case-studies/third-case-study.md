@@ -4,7 +4,7 @@ date: "18-04-2026"
 client: "Meridian Team (name changed for privacy purposes)"
 category: "Engineering & Operations"
 featuredImage: "/images/case-studies/third-case-study/meridian-cover.svg"
-description: "Built a fully customized engineering CRM for an engineering team to manage projects, tasks, clients, and outreach, with an AI layer that drafts follow-ups, flags at-risk relationships, and saves over 11 hours a week per engineer."
+description: "Built a fully customized engineering CRM for an engineering team to manage projects, tasks, clients, and outreach, with an AI layer that drafts follow-ups, flags at-risk relationships, and saves up to 11 hours a week per engineer."
 technicalStack:
   - Notion
   - AI Automation
@@ -12,7 +12,7 @@ technicalStack:
 outcomes:
   - "Unified projects, tasks, clients, and outreach into a single workspace"
   - "Raised outreach reply rate"
-  - "11.4 hours saved every week per engineer through the Ai implementation"
+  - "Up to 11 hours saved every week per engineer through the AI implementation"
   - "Increased pipeline revenue influenced by AI outreach sequences"
   - "83% team utilisation tracked in real time across 5 engineers"
 testimonial:
