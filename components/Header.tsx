@@ -8,10 +8,15 @@ import BrandMark from '@/components/BrandMark'
 import { BRAND } from '@/lib/brand'
 import type { NavItem } from '@/lib/types'
 
-/* /blog is intentionally absent: there are no posts yet, and linking to an
+/* Section anchors are absolute (/#services) so they work from any page, not
+   just the homepage.
+
+   /blog is intentionally absent: there are no posts yet, and linking to an
    empty index reads as an abandoned site. Restore it the moment one lands. */
 const navigation: NavItem[] = [
+  { name: 'Services', href: '/#services' },
   { name: 'Work', href: '/case-studies' },
+  { name: 'Process', href: '/#process' },
   { name: 'FAQ', href: '/faq' },
   { name: 'Contact', href: '/contact' },
 ]
@@ -69,8 +74,10 @@ export default function Header() {
     }
   }, [open])
 
+  /* Anchor links never take the active state — the homepage's own section rail
+     tracks those. Only real routes light up. */
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href)
+    href.includes('#') ? false : pathname.startsWith(href)
 
   return (
     <>
@@ -81,7 +88,9 @@ export default function Header() {
             <span className="font-display text-[19px] tracking-[-0.02em]">LATHE</span>
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+          {/* Middle slot. With three children under justify-between, the links
+              sit centred between the mark and the button, as in the mockup. */}
+          <nav className="hidden items-center gap-[26px] nav:flex" aria-label="Main">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -96,33 +105,37 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
+          </nav>
+
+          {/* Right slot: the CTA on desktop, the menu toggle below 980px. */}
+          <div className="flex items-center">
             <a
               href={BRAND.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded bg-lime px-[18px] py-2.5 font-semibold uppercase text-ink transition-colors hover:bg-bone"
+              className="hidden rounded bg-lime px-[18px] py-2.5 font-semibold uppercase text-ink transition-colors hover:bg-bone nav:inline-flex"
               style={{ fontSize: 13, letterSpacing: '0.06em' }}
             >
               Book a call
             </a>
-          </nav>
 
-          <button
-            ref={toggleRef}
-            onClick={() => setOpen(true)}
-            className="rounded p-2 text-bone transition-colors hover:bg-white/10 lg:hidden"
-            aria-label="Open menu"
-            aria-expanded={open}
-          >
-            <Menu size={22} />
-          </button>
+            <button
+              ref={toggleRef}
+              onClick={() => setOpen(true)}
+              className="rounded p-2 text-bone transition-colors hover:bg-white/10 nav:hidden"
+              aria-label="Open menu"
+              aria-expanded={open}
+            >
+              <Menu size={22} />
+            </button>
+          </div>
         </div>
       </header>
 
       {open && (
         <>
           <div
-            className="fixed inset-0 z-[95] bg-black/60 lg:hidden"
+            className="fixed inset-0 z-[95] bg-black/60 nav:hidden"
             onClick={() => setOpen(false)}
           />
 
@@ -131,7 +144,7 @@ export default function Header() {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="on-ink fixed right-0 top-0 z-[96] flex h-full w-72 flex-col border-l border-line-dark bg-ink text-bone lg:hidden"
+            className="on-ink fixed right-0 top-0 z-[96] flex h-full w-72 flex-col border-l border-line-dark bg-ink text-bone nav:hidden"
           >
             <div className="flex h-16 items-center justify-between border-b border-line-dark px-7">
               <span className="mono text-[#B9B5A8]">Menu</span>

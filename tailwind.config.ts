@@ -36,6 +36,11 @@ const config: Config = {
       maxWidth: {
         wrap: '1240px',
       },
+      screens: {
+        /* The mockup collapses the nav links at 980px, between Tailwind's
+           md and lg, so it gets its own stop. */
+        nav: '980px',
+      },
       animation: {
         'stripes-lime': 'stripesLime 8s linear infinite',
         'stripes-teal': 'stripesTeal 13s linear infinite',

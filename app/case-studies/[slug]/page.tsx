@@ -1,168 +1,188 @@
-import { notFound } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import { getCaseStudyBySlug } from '@/lib/mdx-utils';
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { getAllCaseStudies, getCaseStudyBySlug } from '@/lib/mdx-utils'
+import { formatDateLong } from '@/lib/dates'
+import { BRAND } from '@/lib/brand'
+import Reveal from '@/components/motion/Reveal'
 
-export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
-  const caseStudy = await getCaseStudyBySlug(params.slug);
+export async function generateStaticParams() {
+  const caseStudies = await getAllCaseStudies()
+  return caseStudies.map((cs) => ({ slug: cs.slug }))
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const caseStudy = await getCaseStudyBySlug(params.slug)
   if (!caseStudy) {
     return {
-      title: 'Case Study not found',
+      title: 'Case study not found',
       description: 'We could not find the case study you are looking for.',
-    };
+    }
   }
   return {
     title: caseStudy.title,
     description: caseStudy.description ?? `Read the case study about ${caseStudy.title}`,
-  };
-};
+  }
+}
 
 export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const caseStudy = await getCaseStudyBySlug(params.slug);
+  const caseStudy = await getCaseStudyBySlug(params.slug)
+  if (!caseStudy) notFound()
 
-  if (!caseStudy) {
-    notFound();
-  }
+  /* Frontmatter dates are DD-MM-YYYY, which `new Date()` cannot parse. Going
+     through formatDateLong is what stops this rendering "Invalid Date". */
+  const date = formatDateLong(caseStudy.date)
 
-  const hasMetadata =
-    (caseStudy.technicalStack && caseStudy.technicalStack.length > 0) ||
-    (caseStudy.outcomes && caseStudy.outcomes.length > 0);
+  const stack: string[] = Array.isArray(caseStudy.technicalStack)
+    ? caseStudy.technicalStack
+    : []
+  const outcomes: string[] = Array.isArray(caseStudy.outcomes) ? caseStudy.outcomes : []
 
   return (
-    <div className="min-h-screen">
+    <>
+      {/* ----------------------------------------------------------- HERO */}
+      <div className="on-ink relative overflow-hidden border-b border-ink bg-ink text-bone">
+        <div className="stripes" aria-hidden="true" />
+        <div className="stripes-2" aria-hidden="true" />
 
-      {/* Hero */}
-      <section className="relative py-24 px-6 lg:px-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(120,119,198,0.1),transparent_50%)]" />
+        <div className="wrap relative z-[3] py-14">
+          <Link
+            href="/case-studies"
+            className="mono inline-flex items-center gap-2 text-[#B9B5A8] transition-colors hover:text-lime"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            All work
+          </Link>
 
-        <div className="max-w-4xl mx-auto relative">
-          {/* Back button */}
-          <div className="mb-10">
-            <a
-              href="/case-studies"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 shadow-lg text-sm"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to all case studies
-            </a>
-          </div>
-
-          {/* Category badge */}
-          {caseStudy.category && (
-            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-pink-400 border border-pink-500/40 bg-pink-500/10 rounded-full px-3 py-1 mb-4">
-              {caseStudy.category}
-            </span>
-          )}
-
-          {/* Title */}
-          <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-              {caseStudy.title}
-            </span>
-          </h1>
-
-          {/* Date + Client */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 mb-6">
-            {caseStudy.date && (
-              <span>
-                {new Date(caseStudy.date).toLocaleDateString(undefined, {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
+          <div className="mt-8 max-w-[46rem]">
+            {caseStudy.category && (
+              <Reveal as="span" delay={0.05}>
+                <span className="mono inline-flex items-center gap-2.5 rounded border-2 border-bone px-3.5 py-1.5">
+                  <b className="h-[7px] w-[7px] rounded-[1px] bg-lime" />
+                  {caseStudy.category}
+                </span>
+              </Reveal>
             )}
-            {caseStudy.client && (
-              <>
-                <span className="text-gray-600">·</span>
-                <span className="text-gray-300">{caseStudy.client}</span>
-              </>
-            )}
-          </div>
 
-          {/* Description */}
-          {caseStudy.description && (
-            <p className="text-lg text-gray-300 leading-relaxed border-l-2 border-pink-500/50 pl-4">
-              {caseStudy.description}
-            </p>
-          )}
-        </div>
-      </section>
+            <Reveal delay={0.14}>
+              <h1 className="mt-6" style={{ fontSize: 'clamp(32px, 5.4vw, 64px)' }}>
+                {caseStudy.title}
+              </h1>
+            </Reveal>
 
-      {/* Metadata + Content */}
-      <section className="py-10 px-6 lg:px-24 bg-black/30 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto">
-
-          {/* Metadata cards */}
-          {hasMetadata && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-              {caseStudy.technicalStack && caseStudy.technicalStack.length > 0 && (
-                <div className="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300">
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-3">
-                    Tech Stack
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {caseStudy.technicalStack.map((tech: string) => (
-                      <span
-                        key={tech}
-                        className="text-xs font-medium text-gray-300 bg-white/5 border border-white/10 rounded-md px-2.5 py-1"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {caseStudy.outcomes && caseStudy.outcomes.length > 0 && (
-                <div className="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:border-purple-500/50 transition-all duration-300">
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-3">
-                    Key Outcomes
-                  </h3>
-                  <ul className="space-y-1.5">
-                    {caseStudy.outcomes.map((outcome: string) => (
-                      <li key={outcome} className="flex items-start gap-2 text-sm text-gray-300">
-                        <span className="text-pink-400 mt-0.5 shrink-0">✓</span>
-                        {outcome}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-700/60 to-transparent mb-12" />
-
-          {/* Markdown content */}
-          <div
-            className="case-study-content"
-            dangerouslySetInnerHTML={{ __html: caseStudy.content }}
-          />
-
-          {/* Testimonial */}
-          {caseStudy.testimonial && (
-            <div className="mt-14 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300">
-              <div className="flex items-start gap-4">
-                <span className="text-4xl text-transparent bg-clip-text bg-gradient-to-b from-purple-400 to-pink-400 leading-none select-none font-bold">&quot;</span>
-                <div>
-                  <p className="text-gray-200 text-lg italic leading-relaxed mb-4">
-                    {caseStudy.testimonial.content}
-                  </p>
-                  <p className="text-sm font-semibold text-white">
-                    {caseStudy.testimonial.author}
-                  </p>
-                  {caseStudy.testimonial.role && (
-                    <p className="text-xs text-gray-400 mt-0.5">{caseStudy.testimonial.role}</p>
-                  )}
-                </div>
+            <Reveal delay={0.22}>
+              <div className="mono mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[#B9B5A8]">
+                {caseStudy.client && <span className="text-bone">{caseStudy.client}</span>}
+                {caseStudy.client && date && <span aria-hidden="true">·</span>}
+                {date && <span>{date}</span>}
               </div>
-            </div>
-          )}
+            </Reveal>
 
+            {caseStudy.description && (
+              <Reveal delay={0.3}>
+                <p className="mt-6 border-l-2 border-lime pl-5 text-[18px] leading-relaxed">
+                  {caseStudy.description}
+                </p>
+              </Reveal>
+            )}
+          </div>
         </div>
+      </div>
+
+      {/* ------------------------------------------------------ AT A GLANCE */}
+      {(stack.length > 0 || outcomes.length > 0) && (
+        <section className="border-b border-line bg-clay">
+          <div className="wrap grid gap-px py-0 md:grid-cols-2">
+            {stack.length > 0 && (
+              <Reveal className="border-b border-line py-8 pr-8 md:border-b-0 md:border-r">
+                <h2 className="mono mb-4 text-teal">Stack</h2>
+                <div className="flex flex-wrap gap-2">
+                  {stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded border border-line bg-bone px-2.5 py-1 text-[13px] text-ink"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </Reveal>
+            )}
+
+            {outcomes.length > 0 && (
+              <Reveal delay={0.08} className="py-8 md:pl-8">
+                <h2 className="mono mb-4 text-teal">Outcomes</h2>
+                <ul className="space-y-2">
+                  {outcomes.map((outcome) => (
+                    <li key={outcome} className="relative pl-6 text-[15px] leading-relaxed">
+                      <span className="absolute left-0 top-2 h-[7px] w-[7px] rounded-[1px] border border-ink bg-lime" />
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* -------------------------------------------------------- CONTENT */}
+      <article className="wrap max-w-[46rem] py-14">
+        <div
+          className="prose-editorial"
+          dangerouslySetInnerHTML={{ __html: caseStudy.content }}
+        />
+
+        {caseStudy.testimonial && (
+          <figure className="mt-14 rounded border border-line bg-clay p-8">
+            <span
+              className="select-none font-display leading-none text-lime"
+              style={{ fontSize: 46 }}
+              aria-hidden="true"
+            >
+              “
+            </span>
+            <blockquote className="mt-2 text-[19px] leading-[1.5]">
+              {caseStudy.testimonial.content}
+            </blockquote>
+            <figcaption className="mt-5 border-t border-line pt-4">
+              <b className="block text-[15px]">{caseStudy.testimonial.author}</b>
+              {caseStudy.testimonial.role && (
+                <span className="mono text-grey">{caseStudy.testimonial.role}</span>
+              )}
+            </figcaption>
+          </figure>
+        )}
+      </article>
+
+      {/* ------------------------------------------------------------ CTA */}
+      <section className="border-t border-line px-7 py-20 text-center">
+        <Reveal>
+          <h2 className="mb-5 uppercase" style={{ fontSize: 'clamp(28px, 4.6vw, 56px)' }}>
+            Same problem, <span className="ser normal-case text-teal">different desk</span>?
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mx-auto mb-8 max-w-[44ch] text-[17px] text-grey">
+            If any of the above sounded like your week, the call is free and the answer is
+            straight.
+          </p>
+        </Reveal>
+        <Reveal delay={0.18} className="flex flex-wrap justify-center gap-3">
+          <a
+            href={BRAND.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-lime"
+          >
+            Book a call →
+          </a>
+          <Link href="/case-studies" className="btn btn-line">
+            More work
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Reveal>
       </section>
-    </div>
-  );
+    </>
+  )
 }
